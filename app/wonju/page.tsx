@@ -59,7 +59,7 @@ export default function WonjuPage() {
       <HeroSlider slides={wonjuSlides} />
       <MonthlyProgram campus="wonju" title="이달의 프로그램" />
       <TrustBar />
-      <Programs />
+      <Programs location="원주" />
       <Differentiation />
       <Testimonials reviewUrl="https://blog.naver.com/guy0701/224198180485" />
       <InteriorFacilities campus="wonju" />
