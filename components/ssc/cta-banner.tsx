@@ -16,8 +16,8 @@ export function CtaBanner() {
           <h2 className="text-2xl md:text-4xl font-bold text-text-on-navy text-balance mb-4 leading-tight">
             지금 상담 신청하면
             <br />
-            커리큘럼 자료를{' '}
-            <span className="text-accent-amber">무료로 드립니다</span>
+            1일 무료체험{' '}
+            <span className="text-accent-amber">가능합니다</span>
           </h2>
           <p className="text-white/60 text-sm leading-relaxed mb-8">
             방문 상담 · 네이버 톡톡 · 전화{' '}
@@ -51,8 +51,7 @@ export function CtaBanner() {
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-10">
             {[
               '무료 상담 가능',
-              '방문 없이 전화 상담 OK',
-              '당일 답변 보장',
+              '기본사항은 전화상담 가능합니다',
             ].map((item) => (
               <span
                 key={item}
