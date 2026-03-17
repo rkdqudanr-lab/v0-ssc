@@ -6,27 +6,34 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 const slides = [
   {
     id: 1,
-    title: '관리가 합격을 만든다.',
-    subtitle: 'SSC스파르타 X 커넥츠프랩',
-    description: '원주 · 춘천 · 충주 — 강원도 청년의 합격 파트너',
+    title: '혼자서는 무너집니다.\nSSC스파르타와 함께라면 버팁니다.',
+    subtitle: '독한 관리로 단기합격',
+    description: '공무원 · 임용 · 전문자격 · 재수 전 방향 커버',
     ctas: [
-      { label: '무료 상담 신청하기', action: 'cta' },
-      { label: '시설 둘러보기', action: 'campus' },
+      { label: '무료체험 신청하기', action: 'cta', style: 'primary' },
+      { label: '프로그램 둘러보기', action: 'programs', style: 'secondary' },
     ],
   },
   {
     id: 2,
     title: '원주 유일 커넥츠프랩(공단기) 파트너',
-    subtitle: '공무원 합격반',
-    description: '노량진 합격 시스템을 강원도에서 그대로 경험합니다',
-    ctas: [{ label: '공무원 합격반 알아보기', action: 'programs' }],
+    subtitle: '합격자 3명 중 2명이 선택한 노량진 직계 시스템을 원주에서',
+    description: '',
+    ctas: [{ label: '공무원 합격반 알아보기', action: 'programs', style: 'primary' }],
   },
   {
     id: 3,
-    title: '공부 의지에만 맡기지 않습니다.',
-    subtitle: '환경·시간·생활까지 함께 관리합니다.',
-    description: '교시제 시간표 + 순공 10시간 이상 확보 시스템',
-    ctas: [{ label: '관리형 자습 알아보기', action: 'programs' }],
+    title: '매년 합격자를 배출합니다',
+    subtitle: '초등·중등·유아 임용 — 마지막 60일이 합격을 가릅니다',
+    description: '',
+    ctas: [{ label: '임용반 알아보기', action: 'programs', style: 'primary' }],
+  },
+  {
+    id: 4,
+    title: '월 30만원대 반값재수',
+    subtitle: '생활 리듬이 무너지면 강의도 소용없어요. 관리가 먼저입니다.',
+    description: '',
+    ctas: [{ label: '반값재수 알아보기', action: 'programs', style: 'primary' }],
   },
 ]
 
@@ -75,9 +82,9 @@ export function HeroSlider() {
 
             {/* Dot grid pattern */}
             <div
-              className="absolute inset-0 opacity-10"
+              className="absolute inset-0 opacity-5"
               style={{
-                backgroundImage: `radial-gradient(1px 1px at 20px 30px, white, rgba(255,255,255,.2))`,
+                backgroundImage: `radial-gradient(1px 1px at 20px 30px, #378ADD, rgba(55,138,221,.1))`,
                 backgroundSize: '40px 60px',
               }}
             />
@@ -87,41 +94,27 @@ export function HeroSlider() {
               <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="max-w-2xl">
                   <div className="fade-in-up">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-snug text-balance mb-4" style={{ color: '#ffffff' }}>
-                      {current === 0 ? (
-                        <>
-                          관리가 합격을
-                          <br />
-                          <span style={{ color: '#FF4444' }}>만든다.</span>
-                        </>
-                      ) : (
-                        slide.title
-                      )}
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-balance mb-4 whitespace-pre-wrap" style={{ color: '#ffffff' }}>
+                      {slide.title}
                     </h1>
-                    <p className="text-lg sm:text-xl font-semibold mb-6" style={{ color: '#ffffff' }}>
-                      {current === 0 ? (
-                        <>
-                          <span style={{ color: '#FF4444' }}>SSC스파르타</span>
-                          <span style={{ color: '#ffffff' }}> X </span>
-                          <span style={{ color: '#FF4444' }}>커넥츠프랩</span>
-                        </>
-                      ) : (
-                        <span style={{ color: '#ffffff' }}>{slide.subtitle}</span>
-                      )}
+                    <p className="text-lg sm:text-xl font-semibold mb-4" style={{ color: '#ffffff' }}>
+                      {slide.subtitle}
                     </p>
-                    <p className="text-sm sm:text-base mb-10 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                      {slide.description}
-                    </p>
+                    {slide.description && (
+                      <p className="text-sm sm:text-base mb-10 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                        {slide.description}
+                      </p>
+                    )}
 
                     {/* CTAs */}
                     <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                       {slide.ctas.map((cta, idx) => (
                         <button
                           key={idx}
-                          onClick={() => scroll(cta.action)}
-                          className={`px-7 py-3.5 rounded-xl font-semibold text-base transition-colors ${
-                            idx === 0
-                              ? 'bg-accent-amber text-navy hover:bg-accent-amber/90'
+                          onClick={() => scroll(cta.action === 'cta' ? 'cta' : cta.action)}
+                          className={`px-6 py-3 rounded-lg font-semibold text-base transition-colors ${
+                            cta.style === 'primary'
+                              ? 'bg-white text-navy hover:bg-white/90'
                               : 'border border-white text-white hover:bg-white/10'
                           }`}
                         >
