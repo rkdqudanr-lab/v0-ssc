@@ -40,9 +40,9 @@ export function Navbar() {
           {/* Logo */}
           <button
             onClick={() => handleLink('#hero')}
-            className="font-bold text-xl tracking-tight text-navy dark:text-accent-blue"
+            className="font-bold text-xl tracking-tight text-white dark:text-white"
           >
-            SSC<span className="text-accent-blue dark:text-accent-amber">스파르타</span>
+            SSC<span className="text-white dark:text-white">스파르타</span>
           </button>
 
           {/* Desktop links */}
@@ -88,8 +88,8 @@ export function Navbar() {
           />
           <aside className="w-72 h-full bg-background flex flex-col shadow-xl">
             <div className="flex items-center justify-between px-6 py-5 border-b border-border-color">
-              <span className="font-bold text-lg text-navy dark:text-accent-blue">
-                SSC<span className="text-accent-blue dark:text-accent-amber">스파르타</span>
+              <span className="font-bold text-lg text-white dark:text-white">
+                SSC<span className="text-white dark:text-white">스파르타</span>
               </span>
               <button onClick={() => setOpen(false)} aria-label="메뉴 닫기">
                 <X size={22} className="text-text-secondary" />
