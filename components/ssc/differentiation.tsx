@@ -33,7 +33,7 @@ export function Differentiation() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="mb-12 fade-in-up text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3 -tracking-tight">
             서울 안 가도 됩니다
           </h2>
           <p className="text-text-secondary leading-relaxed max-w-2xl mx-auto">
@@ -41,28 +41,27 @@ export function Differentiation() {
           </p>
         </div>
 
-        {/* Feature cards grid */}
+        {/* Feature cards */}
         <div className="grid md:grid-cols-3 gap-6">
           {features.map((f, i) => (
             <div
               key={f.title}
-              className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border border-border-color bg-white dark:bg-background p-8 flex flex-col gap-5 text-center`}
+              className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border border-border-color bg-white dark:bg-background p-6 flex flex-row md:flex-col gap-4`}
               style={{ borderWidth: '0.5px' }}
             >
-              {/* Icon */}
-              <div className="w-12 h-12 rounded-lg bg-navy/10 dark:bg-accent-blue/10 flex items-center justify-center mx-auto">
+              {/* Icon — left on mobile, centered on desktop */}
+              <div className="w-12 h-12 rounded-lg bg-navy/10 dark:bg-accent-blue/10 flex items-center justify-center flex-shrink-0 md:mx-auto">
                 <f.icon size={24} className="text-navy dark:text-accent-blue" strokeWidth={1.5} />
               </div>
 
-              {/* Title */}
-              <h3 className="text-lg font-bold text-navy dark:text-foreground leading-snug">
-                {f.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {f.description}
-              </p>
+              <div className="md:text-center">
+                <h3 className="text-base font-bold text-navy dark:text-foreground leading-snug mb-2">
+                  {f.title}
+                </h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  {f.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>

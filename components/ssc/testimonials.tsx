@@ -29,20 +29,18 @@ export function Testimonials() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="mb-12 fade-in-up">
-          <p className="text-xs font-semibold text-accent-blue uppercase tracking-widest mb-3">
-            합격후기
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3">
+          <p className="eyebrow text-accent-blue mb-3">합격후기</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3 -tracking-tight">
             합격한 선배들이 직접 말합니다
           </h2>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+        {/* Mobile: horizontal snap scroll / Desktop: grid */}
+        <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 md:grid md:grid-cols-3 md:overflow-visible md:snap-none md:mx-0 md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden mb-10">
           {testimonials.map((t, i) => (
             <article
               key={t.name}
-              className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border bg-background-subtle p-7 flex flex-col gap-4`}
+              className={`snap-center shrink-0 w-[85vw] md:w-auto fade-in-up delay-${(i + 1) * 100} rounded-[12px] border bg-background-subtle p-7 flex flex-col gap-4`}
               style={{ borderWidth: '0.5px', borderColor: 'var(--border-color)' }}
             >
               <Quote size={20} className="text-accent-blue/40" strokeWidth={1.5} />

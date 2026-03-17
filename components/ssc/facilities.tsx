@@ -42,7 +42,7 @@ export function Facilities() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="mb-12 fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3 -tracking-tight">
             공부가 유지될 수밖에 없는 구조
           </h2>
           <p className="text-text-secondary leading-relaxed max-w-2xl">
@@ -50,12 +50,12 @@ export function Facilities() {
           </p>
         </div>
 
-        {/* Facility cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Facility cards grid — 2x2 on mobile, 4 col on lg */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {facilities.map((facility, i) => (
             <div
               key={facility.id}
-              className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border border-border-color bg-background-subtle p-6 flex flex-col gap-4`}
+              className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border border-border-color bg-background-subtle p-6 flex flex-col gap-4 min-h-[160px]`}
               style={{ borderWidth: '0.5px' }}
             >
               {/* Icon */}
@@ -68,12 +68,12 @@ export function Facilities() {
               </div>
 
               {/* Title */}
-              <h3 className="text-base font-bold text-navy dark:text-foreground leading-snug">
+              <h3 className="text-sm font-bold text-navy dark:text-foreground leading-snug">
                 {facility.title}
               </h3>
 
-              {/* Description */}
-              <p className="text-sm text-text-secondary leading-relaxed flex-1">
+              {/* Description — hide on mobile to keep cards compact */}
+              <p className="hidden md:block text-sm text-text-secondary leading-relaxed flex-1">
                 {facility.description}
               </p>
             </div>

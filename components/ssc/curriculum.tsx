@@ -10,9 +10,7 @@ const phases = [
   { step: '4단계', period: '10~11개월', label: '최종 마무리, 그리고 합격' },
 ]
 
-const subjects = [
-  '개인별 맞춤 과목설정'
-]
+const subjects = ['개인별 맞춤 과목설정']
 
 const schedule = [
   {
@@ -49,11 +47,9 @@ export function Curriculum() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="mb-12 fade-in-up">
-          <p className="text-xs font-semibold text-accent-blue uppercase tracking-widest mb-3">
-            Curriculum
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3">
-            커리큘럼 & 하루 시간표
+          <p className="eyebrow text-accent-blue mb-3">Curriculum</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3 -tracking-tight">
+            커리큘럼 &amp; 하루 시간표
           </h2>
           <p className="text-text-secondary text-sm">공무원 합격반 기준</p>
         </div>
@@ -67,7 +63,6 @@ export function Curriculum() {
           <div className="hidden md:flex items-start gap-0 fade-in-up delay-100">
             {phases.map((p, i) => (
               <div key={p.step} className="flex-1 relative">
-                {/* Connector line */}
                 {i < phases.length - 1 && (
                   <div className="absolute top-4 left-1/2 w-full h-px bg-border-color z-0" />
                 )}
@@ -75,12 +70,8 @@ export function Curriculum() {
                   <div className="w-8 h-8 rounded-full bg-navy dark:bg-accent-blue text-white flex items-center justify-center text-xs font-bold font-sans">
                     {i + 1}
                   </div>
-                  <span className="text-xs text-accent-blue font-semibold text-center">
-                    {p.period}
-                  </span>
-                  <span className="text-sm font-bold text-text-primary text-center leading-snug">
-                    {p.label}
-                  </span>
+                  <span className="text-xs text-accent-blue font-semibold text-center">{p.period}</span>
+                  <span className="text-sm font-bold text-text-primary text-center leading-snug">{p.label}</span>
                 </div>
               </div>
             ))}
@@ -138,15 +129,15 @@ export function Curriculum() {
                   <s.icon size={18} className={s.iconColor} strokeWidth={1.5} />
                   <div>
                     <p className="text-sm font-bold text-text-primary">{s.label}</p>
-                    <p className="text-xs text-text-secondary font-mono">{s.time}</p>
+                    {/* Time as badge */}
+                    <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-black/10 text-text-secondary inline-block mt-0.5">
+                      {s.time}
+                    </span>
                   </div>
                 </div>
                 <ul className="flex flex-col gap-2">
                   {s.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2 text-sm text-text-secondary"
-                    >
+                    <li key={item} className="flex items-center gap-2 text-sm text-text-secondary">
                       <span className="w-1 h-1 rounded-full bg-text-secondary/50 flex-shrink-0" />
                       {item}
                     </li>

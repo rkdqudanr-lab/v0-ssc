@@ -26,13 +26,13 @@ const faqs = [
     a: '네. 각자 갖고 있는 인터넷 강의를 가져오시면 학원에서 시간표를 짜고 관리해드리고 있습니다. 만약 처음 시작하시는 경우 강의선정부터 함께 합니다.',
   },
   {
-    q: '면접반은 어떻게 진행되나요??',
+    q: '면접반은 어떻게 진행되나요?',
     a: '면접반은 필기 합격 발표 이후 즉시 집중 면접 준비에 돌입할 수 있도록 하고 있습니다. 필요 시 수시개강하고 있습니다.',
   },
 ]
 
 export function Faq() {
-  const [open, setOpen] = useState<number | null>(null)
+  const [open, setOpen] = useState<number | null>(0)
   const ref = useScrollReveal()
 
   return (
@@ -40,10 +40,8 @@ export function Faq() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="mb-10 fade-in-up">
-          <p className="text-xs font-semibold text-accent-blue uppercase tracking-widest mb-3">
-            FAQ
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance">
+          <p className="eyebrow text-accent-blue mb-3">FAQ</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance -tracking-tight">
             자주 묻는 질문
           </h2>
         </div>

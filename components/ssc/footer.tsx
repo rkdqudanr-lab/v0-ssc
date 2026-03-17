@@ -1,6 +1,7 @@
 'use client'
 
-import { Instagram, ExternalLink } from 'lucide-react'
+import { useState } from 'react'
+import { Instagram, ExternalLink, ChevronDown } from 'lucide-react'
 
 const quickLinks = [
   { label: '홈', href: '#hero' },
@@ -17,6 +18,8 @@ const campusAddresses = [
 ]
 
 export function Footer() {
+  const [campusOpen, setCampusOpen] = useState(false)
+
   const scrollTo = (href: string) => {
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -41,19 +44,30 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Campus addresses */}
+          {/* Campus addresses — accordion on mobile */}
           <div>
-            <p className="text-xs font-semibold text-text-secondary uppercase tracking-widest mb-4">
-              캠퍼스
-            </p>
-            <ul className="flex flex-col gap-3">
-              {campusAddresses.map((c) => (
-                <li key={c.name}>
-                  <p className="text-sm font-semibold text-text-primary">{c.name}</p>
-                  <p className="text-xs text-text-secondary">{c.addr}</p>
-                </li>
-              ))}
-            </ul>
+            <button
+              className="w-full flex items-center justify-between md:cursor-default"
+              onClick={() => setCampusOpen((v) => !v)}
+            >
+              <p className="text-xs font-semibold text-text-secondary uppercase tracking-widest mb-0 md:mb-4">
+                캠퍼스
+              </p>
+              <ChevronDown
+                size={16}
+                className={`text-text-secondary md:hidden transition-transform ${campusOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+            <div className={`overflow-hidden transition-all duration-300 md:max-h-none ${campusOpen ? 'max-h-64 mt-3' : 'max-h-0 md:max-h-none'}`}>
+              <ul className="flex flex-col gap-3 md:mt-0">
+                {campusAddresses.map((c) => (
+                  <li key={c.name}>
+                    <p className="text-sm font-semibold text-text-primary">{c.name}</p>
+                    <p className="text-xs text-text-secondary">{c.addr}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Quick links + SNS */}
