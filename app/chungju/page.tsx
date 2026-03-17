@@ -1,7 +1,6 @@
-import fs from 'fs'
-import path from 'path'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
+import { getPublicImages } from '@/lib/images'
 import { Navbar } from '@/components/ssc/navbar'
 import { HeroSlider } from '@/components/ssc/hero-slider'
 import { TrustBar } from '@/components/ssc/trust-bar'
@@ -17,20 +16,6 @@ import { CtaBanner } from '@/components/ssc/cta-banner'
 import { Footer } from '@/components/ssc/footer'
 import { MobileCtaBar } from '@/components/ssc/mobile-cta-bar'
 import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
-
-/** public/images/maincard/{campus}/ 폴더에서 이미지 경로 목록을 읽어옵니다 */
-function getMaincardImages(campus: string): string[] {
-  const dir = path.join(process.cwd(), 'public', 'images', 'maincard', campus)
-  try {
-    return fs
-      .readdirSync(dir)
-      .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
-      .sort()
-      .map((f) => `/images/maincard/${campus}/${f}`)
-  } catch {
-    return []
-  }
-}
 
 const chungjuSlides = [
   {
@@ -70,11 +55,15 @@ const chungjuSlides = [
 
 export default function ChungjuPage() {
   // maincard 폴더 이미지를 슬라이드 배경으로 적용 (폴더에 이미지가 있으면 순서대로 매핑)
-  const maincardImages = getMaincardImages('chungju')
+  const maincardImages = getPublicImages('maincard', 'chungju')
   const slides = chungjuSlides.map((slide, i) => ({
     ...slide,
     image: maincardImages[i] ?? slide.image,
   }))
+
+  // facilitycard 폴더 이미지 (시설 카드용)
+  // 📁 사진 위치: public/images/facilitycard/chungju/
+  const facilityImages = getPublicImages('facilitycard', 'chungju')
 
   return (
     <main className="overflow-x-hidden pb-16 md:pb-0">
@@ -117,7 +106,8 @@ export default function ChungjuPage() {
 
       {/* 내부시설 미리보기 (4-카드 그리드) + 더 알아보기 → /chungju/interior 페이지로 이동 */}
       {/* 📁 내부시설 사진 위치: public/images/interior/chungju/ */}
-      <Facilities />
+      {/* 📁 시설카드 사진 위치: public/images/facilitycard/chungju/ */}
+      <Facilities facilityImages={facilityImages} />
       <div className="bg-background pb-16 flex justify-center -mt-8">
         <Link
           href="/chungju/interior"

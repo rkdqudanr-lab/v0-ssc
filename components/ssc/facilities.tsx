@@ -54,7 +54,17 @@ const defaultFacilities: FacilityItem[] = [
   },
 ]
 
-export function Facilities({ facilities }: { facilities?: FacilityItem[] } = {}) {
+export function Facilities({
+  facilities,
+  facilityImages,
+}: {
+  facilities?: FacilityItem[]
+  /** 캠퍼스별 시설 카드 이미지 목록 (인덱스 순서로 각 카드에 매핑)
+   * 📁 사진 위치: public/images/facilitycard/{campus}/
+   *   01_자습실.jpg → 1번 카드, 02_라운지.jpg → 2번 카드, ...
+   */
+  facilityImages?: string[]
+} = {}) {
   const items = facilities ?? defaultFacilities
   const ref = useScrollReveal()
 
@@ -75,6 +85,8 @@ export function Facilities({ facilities }: { facilities?: FacilityItem[] } = {})
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {items.map((facility, i) => {
             const Icon = iconMap[facility.icon] ?? BookOpen
+            // 우선순위: facilitycard 폴더 이미지 → 하드코딩 fallback 경로
+            const imageSrc = facilityImages?.[i] ?? facility.image
             return (
               <div
                 key={facility.id}
@@ -84,7 +96,7 @@ export function Facilities({ facilities }: { facilities?: FacilityItem[] } = {})
                 {/* Photo area — shown when image file exists */}
                 <div className="relative w-full aspect-[4/3] bg-navy/10">
                   <Image
-                    src={facility.image}
+                    src={imageSrc}
                     alt={facility.title}
                     fill
                     className="object-cover"

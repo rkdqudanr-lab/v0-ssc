@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
+import { getPublicImages } from '@/lib/images'
 import { Navbar } from '@/components/ssc/navbar'
 import { Facilities } from '@/components/ssc/facilities'
 import { InteriorFacilities } from '@/components/ssc/interior-facilities'
@@ -9,6 +10,11 @@ import { MobileCtaBar } from '@/components/ssc/mobile-cta-bar'
 import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
 
 export default function ChuncheonInteriorPage() {
+  // 시설 카드 이미지 (4-카드 그리드용)
+  // 📁 사진 위치: public/images/facilitycard/chuncheon/
+  //   01_자습실.jpg, 02_라운지.jpg, 03_사물함.jpg, 04_편의시설.jpg
+  const facilityImages = getPublicImages('facilitycard', 'chuncheon')
+
   return (
     <main className="overflow-x-hidden pb-16 md:pb-0">
       <ScrollRevealInit />
@@ -30,10 +36,11 @@ export default function ChuncheonInteriorPage() {
       </div>
 
       {/* 시설 4-카드 그리드 (사진 없어도 항상 표시) */}
-      <Facilities />
+      {/* 📁 시설카드 사진 위치: public/images/facilitycard/chuncheon/ */}
+      <Facilities facilityImages={facilityImages} />
 
       {/* 실내 사진 갤러리 (사진 넣으면 자동 표시) */}
-      {/* 📁 사진 위치: public/images/interior/chuncheon/ */}
+      {/* 📁 갤러리 사진 위치: public/images/interior/chuncheon/ */}
       <InteriorFacilities campus="chuncheon" />
 
       <CtaBanner />
