@@ -4,6 +4,40 @@ import { useState } from 'react'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 import { ChevronRight, X, Check } from 'lucide-react'
 
+// ============================================================
+// ▼▼▼ 블로그 URL 수정 영역 ▼▼▼
+// 각 지점(원주 / 춘천 / 충주)과 프로그램별로 연결할 블로그 URL을
+// 아래에서 직접 수정하세요.
+// ============================================================
+const BLOG_URLS: Record<string, Record<string, string>> = {
+  // ── 공무원 합격반 ──────────────────────────────────────────
+  gwanmuwon: {
+    원주: 'https://blog.naver.com/TODO', // TODO: 원주 공무원합격반 블로그 URL로 교체
+    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 공무원합격반 블로그 URL로 교체
+    충주: 'https://blog.naver.com/TODO', // TODO: 충주 공무원합격반 블로그 URL로 교체
+  },
+  // ── 임용고시 합격반 ───────────────────────────────────────
+  imdong: {
+    원주: 'https://blog.naver.com/TODO', // TODO: 원주 임용고시합격반 블로그 URL로 교체
+    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 임용고시합격반 블로그 URL로 교체
+    충주: 'https://blog.naver.com/TODO', // TODO: 충주 임용고시합격반 블로그 URL로 교체
+  },
+  // ── 전문자격 집중반 ───────────────────────────────────────
+  jagyeok: {
+    원주: 'https://blog.naver.com/TODO', // TODO: 원주 전문자격집중반 블로그 URL로 교체
+    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 전문자격집중반 블로그 URL로 교체
+    충주: 'https://blog.naver.com/TODO', // TODO: 충주 전문자격집중반 블로그 URL로 교체
+  },
+  // ── 독학재수 관리형 ───────────────────────────────────────
+  jaesu: {
+    원주: 'https://blog.naver.com/TODO', // TODO: 원주 독학재수관리형 블로그 URL로 교체
+    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 독학재수관리형 블로그 URL로 교체
+    충주: 'https://blog.naver.com/TODO', // TODO: 충주 독학재수관리형 블로그 URL로 교체
+  },
+}
+// ▲▲▲ 블로그 URL 수정 영역 끝 ▲▲▲
+// ============================================================
+
 const cardColors: Record<string, string> = {
   gwanmuwon: '#0F1C3F',
   imdong: '#1a2744',
@@ -133,7 +167,7 @@ SSC스파르타는 불필요한 실강 비용을 덜어내고,
 
 type Program = typeof programsTabs[number]
 
-function ProgramDetail({ program, onClose }: { program: Program; onClose: () => void }) {
+function ProgramDetail({ program, onClose, blogUrl }: { program: Program; onClose: () => void; blogUrl: string }) {
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
@@ -283,25 +317,25 @@ function ProgramDetail({ program, onClose }: { program: Program; onClose: () => 
 
         {/* Fixed bottom CTA */}
         <div className="fixed bottom-0 inset-x-0 p-4 bg-background border-t border-border-color">
-          <button
-            onClick={() => {
-              onClose()
-              setTimeout(() => document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' }), 300)
-            }}
-            className="w-full py-4 rounded-2xl bg-navy text-white font-bold text-base"
+          <a
+            href={blogUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-4 rounded-2xl bg-navy text-white font-bold text-base text-center"
           >
-            상담 신청하기 →
-          </button>
+            더 알아보기 →
+          </a>
         </div>
       </div>
     </div>
   )
 }
 
-export function Programs() {
+export function Programs({ location = '원주' }: { location?: '원주' | '춘천' | '충주' }) {
   const [selected, setSelected] = useState<string | null>(null)
   const ref = useScrollReveal()
   const selectedProgram = programsTabs.find((p) => p.id === selected)
+  const selectedBlogUrl = selected ? (BLOG_URLS[selected]?.[location] ?? '#') : '#'
 
   return (
     <section id="programs" className="bg-background py-16 md:py-28" ref={ref}>
@@ -356,6 +390,7 @@ export function Programs() {
         <ProgramDetail
           program={selectedProgram}
           onClose={() => setSelected(null)}
+          blogUrl={selectedBlogUrl}
         />
       )}
     </section>

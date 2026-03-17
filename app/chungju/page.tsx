@@ -59,7 +59,7 @@ export default function ChungjuPage() {
       <HeroSlider slides={chungjuSlides} />
       <MonthlyProgram campus="chungju" title="이달의 프로그램" />
       <TrustBar />
-      <Programs />
+      <Programs location="충주" />
       <Differentiation />
       {/* TODO: 충주 합격후기 블로그 URL - 나중에 수정 필요 */}
       <Testimonials reviewUrl="https://blog.naver.com/guy0701/224198180485" />
