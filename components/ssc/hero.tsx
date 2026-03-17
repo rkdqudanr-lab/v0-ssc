@@ -32,7 +32,7 @@ export function Hero() {
 
           {/* Sub-headline */}
           <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-10 max-w-xl fade-in-up delay-200">
-            원주 · 춘천 · 충주 — 강원도 청년의 합격 파트너 SSC스파르타
+            원주 · 춘천 · 충주 — 여러분의 합격 파트너 SSC스파르타
           </p>
 
           {/* CTAs */}
@@ -54,7 +54,7 @@ export function Hero() {
           {/* Micro-trust row */}
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-10 fade-in-up delay-400">
             {[
-              '누적 합격생 1,200명+',
+              '누적 합격생 600명+',
               '강원 합격률 1위',
               '커넥츠프랩(공단기) 파트너',
             ].map((item) => (
@@ -74,7 +74,7 @@ export function Hero() {
       <div className="hidden lg:flex absolute right-0 top-0 bottom-0 w-[36%] bg-navy/5 dark:bg-navy/40 items-center justify-center">
         <div className="grid grid-cols-2 gap-4 p-10 w-full">
           {[
-            { label: '합격생', value: '1,200+', sub: '누적 합격' },
+            { label: '합격생', value: '600+', sub: '누적 합격' },
             { label: '합격률', value: '1위', sub: '강원 지역' },
             { label: '캠퍼스', value: '3개', sub: '원주·춘천·충주' },
             { label: '프로그램', value: '3개', sub: '공무원·취업·재수' },
