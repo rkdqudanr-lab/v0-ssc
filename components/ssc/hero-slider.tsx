@@ -6,9 +6,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 const slides = [
   {
     id: 1,
-    title: '공부 의지에만 맡기지 않습니다.',
-    subtitle: '환경·시간·생활까지 함께 관리합니다.',
-    description: '원주 · 춘천 · 충주 — 강원도 청년의 합격 파트너 SSC스파르타',
+    title: '관리가 합격을 만든다.',
+    subtitle: 'SSC스파르타 X 커넥츠프랩',
+    description: '원주 · 춘천 · 충주 — 강원도 청년의 합격 파트너',
     ctas: [
       { label: '무료 상담 신청하기', action: 'cta' },
       { label: '시설 둘러보기', action: 'campus' },
@@ -23,8 +23,8 @@ const slides = [
   },
   {
     id: 3,
-    title: '관리가 합격을 만든다',
-    subtitle: '관리형 자습',
+    title: '공부 의지에만 맡기지 않습니다.',
+    subtitle: '환경·시간·생활까지 함께 관리합니다.',
     description: '교시제 시간표 + 순공 10시간 이상 확보 시스템',
     ctas: [{ label: '관리형 자습 알아보기', action: 'programs' }],
   },
