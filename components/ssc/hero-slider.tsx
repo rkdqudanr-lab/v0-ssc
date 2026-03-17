@@ -121,8 +121,8 @@ export function HeroSlider() {
                 <div className="max-w-2xl">
                   <div className="fade-in-up">
                     <h1
-                      className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight text-balance mb-6 whitespace-pre-wrap display-title"
-                      style={{ color: '#ffffff' }}
+                      className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight mb-6 whitespace-pre-wrap display-title"
+                      style={{ color: '#ffffff', wordBreak: 'keep-all' }}
                     >
                       {slide.title}
                     </h1>
