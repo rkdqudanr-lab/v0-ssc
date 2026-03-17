@@ -76,11 +76,15 @@ export function Faq() {
                     <Plus size={16} className="text-text-secondary flex-shrink-0" />
                   )}
                 </button>
-                {isOpen && (
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    isOpen ? 'max-h-96' : 'max-h-0'
+                  }`}
+                >
                   <div className="px-6 pb-5">
                     <p className="text-sm text-text-secondary leading-relaxed">{faq.a}</p>
                   </div>
-                )}
+                </div>
               </li>
             )
           })}
