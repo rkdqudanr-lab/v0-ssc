@@ -11,31 +11,31 @@ const phases = [
 ]
 
 const subjects = [
-  '국어', '영어', '한국사', '행정법', '행정학', '사회', '과학', '수학',
+  '국어', '영어', '한국사', '행정법', '행정학', '형사법', '경찰학', '헌법', '소방학', '소방법규', '기타 기술직렬과목포함'
 ]
 
 const schedule = [
   {
     icon: Sun,
     label: '오전 루틴',
-    time: '06:30 – 12:00',
-    items: ['점호', '오전 강의', '집중 자습'],
+    time: '08:20 – 12:30',
+    items: ['오전출결체크', '오전 강의', '집중 자습1'],
     color: 'bg-accent-amber/10 border-accent-amber/20',
     iconColor: 'text-accent-amber',
   },
   {
     icon: Coffee,
     label: '오후 루틴',
-    time: '13:00 – 18:00',
-    items: ['오후 강의', '과목 클리닉', '오답 정리'],
+    time: '13:50 – 17:40',
+    items: ['오후 강의', '매드클래스(선택)', '집중 자습2'],
     color: 'bg-accent-blue/10 border-accent-blue/20',
     iconColor: 'text-accent-blue',
   },
   {
     icon: Moon,
     label: '저녁 루틴',
-    time: '19:00 – 22:00',
-    items: ['저녁 자습', '일일 점검', '플래너 작성'],
+    time: '18:50 – 22:00',
+    items: ['집중 자습3', '일일 점검', '플래너 작성'],
     color: 'bg-navy/5 border-navy/15 dark:bg-navy/30 dark:border-navy/40',
     iconColor: 'text-navy dark:text-accent-blue',
   },

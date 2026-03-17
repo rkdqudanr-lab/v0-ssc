@@ -101,7 +101,7 @@ export function Campus() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold text-accent-blue hover:underline mt-2"
             >
-              카카오맵으로 보기
+              네이버지도로 보기
               <ExternalLink size={13} />
             </a>
           </div>
