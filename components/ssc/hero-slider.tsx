@@ -98,7 +98,7 @@ export function HeroSlider() {
                         slide.title
                       )}
                     </h1>
-                    <p className="text-lg sm:text-xl font-semibold mb-6" style={{ color: current === 0 ? '#FF4444' : '#ffffff' }}>
+                    <p className="text-lg sm:text-xl font-semibold mb-6" style={{ color: '#ffffff' }}>
                       {current === 0 ? (
                         <>
                           <span style={{ color: '#FF4444' }}>SSC스파르타</span>
@@ -106,7 +106,7 @@ export function HeroSlider() {
                           <span style={{ color: '#FF4444' }}>커넥츠프랩</span>
                         </>
                       ) : (
-                        slide.subtitle
+                        <span style={{ color: '#ffffff' }}>{slide.subtitle}</span>
                       )}
                     </p>
                     <p className="text-sm sm:text-base mb-10 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
