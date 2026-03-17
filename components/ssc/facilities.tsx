@@ -2,12 +2,27 @@
 
 import Image from 'next/image'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { BookOpen, Users, Box, Coffee } from 'lucide-react'
+import { BookOpen, Users, Box, Coffee, type LucideIcon } from 'lucide-react'
 
-const facilities = [
+const iconMap: Record<string, LucideIcon> = {
+  BookOpen,
+  Users,
+  Box,
+  Coffee,
+}
+
+export type FacilityItem = {
+  id: number
+  icon: string
+  image: string
+  title: string
+  description: string
+}
+
+const defaultFacilities: FacilityItem[] = [
   {
     id: 1,
-    icon: BookOpen,
+    icon: 'BookOpen',
     image: '/images/facility-study.jpg',
     title: '개별 지정석 자습실',
     description:
@@ -15,7 +30,7 @@ const facilities = [
   },
   {
     id: 2,
-    icon: Users,
+    icon: 'Users',
     image: '/images/facility-lounge.jpg',
     title: '스탠딩 라운지',
     description:
@@ -23,7 +38,7 @@ const facilities = [
   },
   {
     id: 3,
-    icon: Box,
+    icon: 'Box',
     image: '/images/facility-locker.jpg',
     title: '개인 사물함 · 신발장',
     description:
@@ -31,7 +46,7 @@ const facilities = [
   },
   {
     id: 4,
-    icon: Coffee,
+    icon: 'Coffee',
     image: '/images/facility-surroundings.jpg',
     title: '편의시설 (병원, 카페 등)',
     description:
@@ -39,10 +54,8 @@ const facilities = [
   },
 ]
 
-type FacilityItem = typeof facilities[number]
-
-export function Facilities({ facilities: facilitiesProp }: { facilities?: FacilityItem[] } = {}) {
-  const items = facilitiesProp ?? facilities
+export function Facilities({ facilities }: { facilities?: FacilityItem[] } = {}) {
+  const items = facilities ?? defaultFacilities
   const ref = useScrollReveal()
 
   return (
@@ -60,40 +73,43 @@ export function Facilities({ facilities: facilitiesProp }: { facilities?: Facili
 
         {/* Facility cards grid — 2x2 on mobile, 4 col on lg */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {items.map((facility, i) => (
-            <div
-              key={facility.id}
-              className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border border-border-color bg-background-subtle flex flex-col overflow-hidden`}
-              style={{ borderWidth: '0.5px' }}
-            >
-              {/* Photo area — shown when image file exists */}
-              <div className="relative w-full aspect-[4/3] bg-navy/10">
-                <Image
-                  src={facility.image}
-                  alt={facility.title}
-                  fill
-                  className="object-cover"
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                />
-                {/* Fallback icon shown on top of the empty area when no image */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-10 h-10 rounded-lg bg-navy/10 dark:bg-accent-blue/10 flex items-center justify-center">
-                    <facility.icon size={20} className="text-navy dark:text-accent-blue" strokeWidth={1.5} />
+          {items.map((facility, i) => {
+            const Icon = iconMap[facility.icon] ?? BookOpen
+            return (
+              <div
+                key={facility.id}
+                className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border border-border-color bg-background-subtle flex flex-col overflow-hidden`}
+                style={{ borderWidth: '0.5px' }}
+              >
+                {/* Photo area — shown when image file exists */}
+                <div className="relative w-full aspect-[4/3] bg-navy/10">
+                  <Image
+                    src={facility.image}
+                    alt={facility.title}
+                    fill
+                    className="object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  />
+                  {/* Fallback icon shown on top of the empty area when no image */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-navy/10 dark:bg-accent-blue/10 flex items-center justify-center">
+                      <Icon size={20} className="text-navy dark:text-accent-blue" strokeWidth={1.5} />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Text */}
-              <div className="p-5 flex flex-col gap-2">
-                <h3 className="text-sm font-bold text-navy dark:text-foreground leading-snug">
-                  {facility.title}
-                </h3>
-                <p className="hidden md:block text-sm text-text-secondary leading-relaxed">
-                  {facility.description}
-                </p>
+                {/* Text */}
+                <div className="p-5 flex flex-col gap-2">
+                  <h3 className="text-sm font-bold text-navy dark:text-foreground leading-snug">
+                    {facility.title}
+                  </h3>
+                  <p className="hidden md:block text-sm text-text-secondary leading-relaxed">
+                    {facility.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
