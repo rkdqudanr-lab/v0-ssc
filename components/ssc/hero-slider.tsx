@@ -87,17 +87,18 @@ export function HeroSlider() {
               <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="max-w-2xl">
                   <div className="fade-in-up">
-                    <h1 className="text-5xl sm:text-6xl md:text-[64px] font-bold leading-tight text-balance mb-4">
-                      <span style={{ color: '#ffffff' }}>
-                        {current === 0 ? '관리가 합격을' : slide.title.split('(')[0]}
-                      </span>
-                      <br />
-                      <span style={{ color: '#FF4444' }}>
-                        {current === 0 ? '만든다.' : ''}
-                      </span>
-                      {current !== 0 && <span style={{ color: '#ffffff' }}>{slide.title}</span>}
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-snug text-balance mb-4" style={{ color: '#ffffff' }}>
+                      {current === 0 ? (
+                        <>
+                          관리가 합격을
+                          <br />
+                          <span style={{ color: '#FF4444' }}>만든다.</span>
+                        </>
+                      ) : (
+                        slide.title
+                      )}
                     </h1>
-                    <p className="text-xl sm:text-2xl font-semibold mb-6">
+                    <p className="text-lg sm:text-xl font-semibold mb-6" style={{ color: current === 0 ? '#FF4444' : '#ffffff' }}>
                       {current === 0 ? (
                         <>
                           <span style={{ color: '#FF4444' }}>SSC스파르타</span>
@@ -105,10 +106,10 @@ export function HeroSlider() {
                           <span style={{ color: '#FF4444' }}>커넥츠프랩</span>
                         </>
                       ) : (
-                        <span style={{ color: '#ffffff' }}>{slide.subtitle}</span>
+                        slide.subtitle
                       )}
                     </p>
-                    <p className="text-lg mb-10 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                    <p className="text-sm sm:text-base mb-10 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
                       {slide.description}
                     </p>
 
