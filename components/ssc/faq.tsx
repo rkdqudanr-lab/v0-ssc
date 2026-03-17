@@ -51,9 +51,9 @@ export function Faq() {
           {faqs.map((faq, i) => {
             const isOpen = open === i
             return (
-              <li
-                key={i}
-                className={`fade-in-up delay-${(i % 4) * 100} rounded-[12px] border overflow-hidden transition-colors ${
+              <li key={i} className={`fade-in-up delay-${(i % 4) * 100}`}>
+              <div
+                className={`rounded-[12px] border overflow-hidden transition-colors ${
                   isOpen
                     ? 'border-accent-blue/40 bg-background-blue-soft'
                     : 'border-border-color bg-background'
@@ -83,6 +83,7 @@ export function Faq() {
                     <p className="text-sm text-text-secondary leading-relaxed">{faq.a}</p>
                   </div>
                 </div>
+              </div>
               </li>
             )
           })}
