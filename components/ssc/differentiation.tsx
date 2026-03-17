@@ -6,7 +6,7 @@ import { Shield, BarChart3, Users } from 'lucide-react'
 const features = [
   {
     icon: Shield,
-    title: '원주 유일 커넥츠프랩(공단기) 직계 파트너',
+    title: '원주 유일 커넥츠프랩(공단기) 파트너',
     description: '노량진 커리큘럼 그대로, 강원도 밀착 관리로 완성',
   },
   {
