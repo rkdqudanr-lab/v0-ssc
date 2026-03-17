@@ -5,7 +5,7 @@ export function MobileCtaBar() {
     <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-white border-t border-border-color md:hidden">
       <div className="grid grid-cols-2 gap-2">
         <a
-          href="tel:033-766-7999"
+          href="센터별 문의"
           className="flex items-center justify-center py-3.5 rounded-xl bg-accent-amber text-navy font-bold text-sm"
         >
           📞 전화 상담
