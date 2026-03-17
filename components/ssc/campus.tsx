@@ -15,7 +15,7 @@ const campuses = [
   },
   {
     id: '춘천',
-    address: '강원특별자치도 춘천시 (상담 후 안내)',
+    address: '강원특별자치도 춘천시 퇴계로 249 5층',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     kakaoUrl: 'https://map.kakao.com',
@@ -55,11 +55,10 @@ export function Campus() {
             <button
               key={c.id}
               onClick={() => setActive(c.id)}
-              className={`px-5 py-2 rounded-md text-sm font-semibold transition-colors ${
-                active === c.id
+              className={`px-5 py-2 rounded-md text-sm font-semibold transition-colors ${active === c.id
                   ? 'bg-navy text-white dark:bg-accent-blue'
                   : 'text-text-secondary hover:text-text-primary'
-              }`}
+                }`}
             >
               {c.id}
             </button>
