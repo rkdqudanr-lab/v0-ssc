@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import useSWR from 'swr'
 import type { SiteContent } from '@/lib/content'
@@ -110,17 +111,24 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
               i === current ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {/* Background gradient overlay */}
-            <div className="absolute inset-0 bg-navy/95" />
-
-            {/* Dot grid pattern */}
-            <div
-              className="absolute inset-0 opacity-5"
-              style={{
-                backgroundImage: `radial-gradient(1px 1px at 20px 30px, #378ADD, rgba(55,138,221,.1))`,
-                backgroundSize: '40px 60px',
-              }}
-            />
+            {/* Background: photo if provided, else navy */}
+            {(slide as {image?: string}).image ? (
+              <>
+                <Image src={(slide as {image?: string}).image!} alt="" fill className="object-cover" priority={i === 0} />
+                <div className="absolute inset-0 bg-navy/75" />
+              </>
+            ) : (
+              <>
+                <div className="absolute inset-0 bg-navy/95" />
+                <div
+                  className="absolute inset-0 opacity-5"
+                  style={{
+                    backgroundImage: `radial-gradient(1px 1px at 20px 30px, #378ADD, rgba(55,138,221,.1))`,
+                    backgroundSize: '40px 60px',
+                  }}
+                />
+              </>
+            )}
 
             {/* Content */}
             <div className="relative h-full flex items-center">

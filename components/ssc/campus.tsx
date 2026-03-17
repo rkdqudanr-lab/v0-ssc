@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 import { MapPin, Phone, Clock } from 'lucide-react'
 
@@ -12,6 +13,7 @@ const campuses = [
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     naverUrl: 'https://naver.me/5Q3BqTPH',
     mapQuery: '원주 SSC스파르타',
+    image: '/images/campus-wonju.jpg',
   },
   {
     id: '춘천',
@@ -20,6 +22,7 @@ const campuses = [
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     naverUrl: 'https://naver.me/5RhgAeoi',
     mapQuery: '춘천 SSC스파르타',
+    image: '/images/campus-chuncheon.jpg',
   },
   {
     id: '충주',
@@ -28,6 +31,7 @@ const campuses = [
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     naverUrl: 'https://naver.me/xmxZQakb',
     mapQuery: '충주 SSC스파르타',
+    image: '/images/campus-chungju.jpg',
   },
 ]
 
@@ -97,20 +101,29 @@ export function Campus({ filter }: { filter?: string } = {}) {
             </ul>
           </div>
 
-          {/* Naver map link button (replaces map placeholder) */}
+          {/* Naver map link — with optional building photo background */}
           <a
             href={campus.naverUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-[12px] border border-border-color bg-background-blue-soft flex flex-col items-center justify-center min-h-56 gap-4 hover:bg-accent-blue/10 transition-colors group"
+            className="relative rounded-[12px] border border-border-color overflow-hidden flex flex-col items-center justify-center min-h-56 gap-4 hover:opacity-90 transition-opacity group"
             style={{ borderWidth: '0.5px' }}
           >
-            <MapPin size={40} className="text-accent-blue group-hover:scale-110 transition-transform" strokeWidth={1.2} />
-            <div className="text-center">
-              <p className="text-sm font-bold text-text-primary">{campus.id} 캠퍼스</p>
-              <p className="text-xs text-accent-blue font-semibold mt-1">
-                📍 네이버 지도에서 보기 →
-              </p>
+            {/* Building photo */}
+            <Image
+              src={campus.image}
+              alt={`${campus.id} 캠퍼스`}
+              fill
+              className="object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+            />
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-navy/60" />
+            {/* Content */}
+            <div className="relative z-10 text-center">
+              <MapPin size={36} className="text-white mx-auto mb-2 group-hover:scale-110 transition-transform" strokeWidth={1.2} />
+              <p className="text-sm font-bold text-white">{campus.id} 캠퍼스</p>
+              <p className="text-xs text-white/80 font-semibold mt-1">📍 네이버 지도에서 보기 →</p>
             </div>
           </a>
         </div>
