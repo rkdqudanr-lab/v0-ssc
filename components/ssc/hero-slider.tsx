@@ -2,42 +2,47 @@
 
 import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import useSWR from 'swr'
+import type { SiteContent } from '@/lib/content'
 
-const slides = [
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
+const defaultSlides = [
   {
     id: 1,
     title: '혼자서는 무너집니다.\nSSC스파르타와 함께라면 버팁니다.',
     subtitle: '독한 관리로 단기합격',
     description: '공무원 · 임용 · 전문자격 · 재수 전 방향 커버',
-    ctas: [
-      { label: '무료체험 신청하기', action: 'cta', style: 'primary' },
-      { label: '프로그램 둘러보기', action: 'programs', style: 'secondary' },
-    ],
+    ctaLabel: '무료체험 신청하기',
+    ctaSecondaryLabel: '프로그램 둘러보기',
   },
   {
     id: 2,
     title: '원주 유일 커넥츠프랩(공단기) 파트너',
     subtitle: '합격자 3명 중 2명이 선택한 노량진 직계 시스템을 원주에서',
     description: '',
-    ctas: [{ label: '공무원 합격반 알아보기', action: 'programs', style: 'primary' }],
+    ctaLabel: '공무원 합격반 알아보기',
   },
   {
     id: 3,
     title: '매년 합격자를 배출합니다',
     subtitle: '초등·중등·유아 임용 — 마지막 60일이 합격을 가릅니다',
     description: '',
-    ctas: [{ label: '임용반 알아보기', action: 'programs', style: 'primary' }],
+    ctaLabel: '임용반 알아보기',
   },
   {
     id: 4,
     title: '월 30만원대 반값재수',
     subtitle: '생활 리듬이 무너지면 강의도 소용없어요. 관리가 먼저입니다.',
     description: '',
-    ctas: [{ label: '반값재수 알아보기', action: 'programs', style: 'primary' }],
+    ctaLabel: '반값재수 알아보기',
   },
 ]
 
 export function HeroSlider() {
+  const { data } = useSWR<SiteContent>('/api/content', fetcher)
+  const slides = data?.hero?.slides ?? defaultSlides
+  
   const [current, setCurrent] = useState(0)
   const [autoPlay, setAutoPlay] = useState(true)
 
@@ -49,7 +54,7 @@ export function HeroSlider() {
     }, 4000)
 
     return () => clearInterval(timer)
-  }, [autoPlay])
+  }, [autoPlay, slides.length])
 
   const goToSlide = (index: number) => {
     setCurrent(index)
@@ -108,19 +113,20 @@ export function HeroSlider() {
 
                     {/* CTAs */}
                     <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
-                      {slide.ctas.map((cta, idx) => (
+                      <button
+                        onClick={() => scroll('cta')}
+                        className="px-6 py-3 rounded-lg font-semibold text-base transition-colors bg-white text-navy hover:bg-white/90"
+                      >
+                        {slide.ctaLabel}
+                      </button>
+                      {slide.ctaSecondaryLabel && (
                         <button
-                          key={idx}
-                          onClick={() => scroll(cta.action === 'cta' ? 'cta' : cta.action)}
-                          className={`px-6 py-3 rounded-lg font-semibold text-base transition-colors ${
-                            cta.style === 'primary'
-                              ? 'bg-white text-navy hover:bg-white/90'
-                              : 'border border-white text-white hover:bg-white/10'
-                          }`}
+                          onClick={() => scroll('programs')}
+                          className="px-6 py-3 rounded-lg font-semibold text-base transition-colors border border-white text-white hover:bg-white/10"
                         >
-                          {cta.label}
+                          {slide.ctaSecondaryLabel}
                         </button>
-                      ))}
+                      )}
                     </div>
                   </div>
                 </div>

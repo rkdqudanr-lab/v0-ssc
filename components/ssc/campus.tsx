@@ -23,7 +23,7 @@ const campuses = [
   },
   {
     id: '충주',
-    address: '충청북도 충주시 (상담 후 안내)',
+    address: '충청북도 충주시 계명대로 283',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     kakaoUrl: 'https://map.kakao.com',
@@ -56,8 +56,8 @@ export function Campus() {
               key={c.id}
               onClick={() => setActive(c.id)}
               className={`px-5 py-2 rounded-md text-sm font-semibold transition-colors ${active === c.id
-                  ? 'bg-navy text-white dark:bg-accent-blue'
-                  : 'text-text-secondary hover:text-text-primary'
+                ? 'bg-navy text-white dark:bg-accent-blue'
+                : 'text-text-secondary hover:text-text-primary'
                 }`}
             >
               {c.id}

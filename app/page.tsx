@@ -1,4 +1,3 @@
-import { AnnouncementBar } from '@/components/ssc/announcement-bar'
 import { Navbar } from '@/components/ssc/navbar'
 import { HeroSlider } from '@/components/ssc/hero-slider'
 import { TrustBar } from '@/components/ssc/trust-bar'
@@ -19,7 +18,6 @@ import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
 export default function Home() {
   return (
     <main className="overflow-x-hidden pb-16 md:pb-0">
-      <AnnouncementBar />
       <ScrollRevealInit />
       <Navbar />
       <HeroSlider />
