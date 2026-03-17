@@ -1,6 +1,19 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ChevronRight, MapPin } from 'lucide-react'
 
+/**
+ * 메인 페이지 캠퍼스 카드 설정
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 📁 카드 배경 사진 위치: public/images/main/ 폴더
+ *   원주   → public/images/main/wonju.jpg
+ *   춘천   → public/images/main/chuncheon.jpg
+ *   충주   → public/images/main/chungju.jpg
+ *
+ * 📌 이미지가 없으면 color(배경색)로 대체됩니다.
+ * 📌 권장 비율: 가로 2:1 이상 (예: 800×400px)
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
 const locations = [
   {
     id: 'wonju',
@@ -13,8 +26,9 @@ const locations = [
       '공무원 합격자에게 물어보세요',
     ],
     address: '원주시 치악로 1793 농협건물 4층',
-    color: '#0F1C3F',
+    color: '#0F1C3F',   // 이미지 없을 때 표시되는 배경색
     accent: '#378ADD',
+    image: '/images/main/wonju.jpg',   // 카드 배경 이미지 (없으면 color 사용)
   },
   {
     id: 'chuncheon',
@@ -27,8 +41,9 @@ const locations = [
       '초등·중등·유아 임용 매년 합격자 배출',
     ],
     address: '춘천시 퇴계로 249 5층',
-    color: '#1a2744',
+    color: '#1a2744',   // 이미지 없을 때 표시되는 배경색
     accent: '#378ADD',
+    image: '/images/main/chuncheon.jpg',   // 카드 배경 이미지 (없으면 color 사용)
   },
   {
     id: 'chungju',
@@ -41,8 +56,9 @@ const locations = [
       '"스파르타는 임용생에게 빛입니다" — 합격생 후기',
     ],
     address: '충주시 계명대로 283',
-    color: '#0d1f3c',
+    color: '#0d1f3c',   // 이미지 없을 때 표시되는 배경색
     accent: '#F5A623',
+    image: '/images/main/chungju.jpg',   // 카드 배경 이미지 (없으면 color 사용)
   },
 ]
 
@@ -85,35 +101,51 @@ export default function SelectLocation() {
             <Link
               key={loc.id}
               href={loc.href}
-              className="group block rounded-2xl p-7 transition-transform duration-200 active:scale-[0.98] hover:scale-[0.99]"
-              style={{ backgroundColor: loc.color, border: '1px solid rgba(255,255,255,0.08)' }}
+              className="group relative block rounded-2xl overflow-hidden transition-transform duration-200 active:scale-[0.98] hover:scale-[0.99]"
+              style={{ border: '1px solid rgba(255,255,255,0.08)' }}
             >
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <p className="text-white/50 text-xs font-semibold tracking-wider uppercase mb-1">캠퍼스</p>
-                  <h2 className="text-white text-4xl font-bold">{loc.name}</h2>
-                  <p className="font-semibold mt-1 text-sm" style={{ color: loc.accent }}>{loc.tagline}</p>
-                </div>
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
-                >
-                  <ChevronRight size={20} className="text-white" />
-                </div>
+              {/* 배경: 이미지 + 어두운 오버레이 */}
+              <div className="absolute inset-0" style={{ backgroundColor: loc.color }}>
+                <Image
+                  src={loc.image}
+                  alt={`${loc.name} 캠퍼스`}
+                  fill
+                  className="object-cover"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+                {/* 텍스트 가독성을 위한 그라데이션 오버레이 */}
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 100%)' }} />
               </div>
 
-              <ul className="space-y-2 mb-5">
-                {loc.highlights.map((h, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="text-white/30 mt-0.5">—</span>
-                    <span className="text-white/75 text-sm leading-snug">{h}</span>
-                  </li>
-                ))}
-              </ul>
+              {/* 콘텐츠 */}
+              <div className="relative z-10 p-7">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <p className="text-white/50 text-xs font-semibold tracking-wider uppercase mb-1">캠퍼스</p>
+                    <h2 className="text-white text-4xl font-bold">{loc.name}</h2>
+                    <p className="font-semibold mt-1 text-sm" style={{ color: loc.accent }}>{loc.tagline}</p>
+                  </div>
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+                  >
+                    <ChevronRight size={20} className="text-white" />
+                  </div>
+                </div>
 
-              <div className="flex items-center gap-1.5 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                <MapPin size={13} className="text-white/30 flex-shrink-0" />
-                <span className="text-white/40 text-xs">{loc.address}</span>
+                <ul className="space-y-2 mb-5">
+                  {loc.highlights.map((h, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-white/30 mt-0.5">—</span>
+                      <span className="text-white/75 text-sm leading-snug">{h}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex items-center gap-1.5 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}>
+                  <MapPin size={13} className="text-white/30 flex-shrink-0" />
+                  <span className="text-white/40 text-xs">{loc.address}</span>
+                </div>
               </div>
             </Link>
           ))}
