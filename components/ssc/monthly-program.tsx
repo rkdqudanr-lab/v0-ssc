@@ -30,9 +30,11 @@ import Image from 'next/image'
 interface Props {
   campus: string
   title?: string
+  /** true이면 이미지가 없어도 섹션을 렌더링합니다 (독립 페이지용) */
+  showEmpty?: boolean
 }
 
-export function MonthlyProgram({ campus, title = '이달의 프로그램' }: Props) {
+export function MonthlyProgram({ campus, title = '이달의 프로그램', showEmpty = false }: Props) {
   // public/images/programs/{campus}/ 폴더에서 이미지 목록을 읽어옵니다
   const dir = path.join(process.cwd(), 'public', 'images', 'programs', campus)
 
@@ -47,8 +49,8 @@ export function MonthlyProgram({ campus, title = '이달의 프로그램' }: Pro
     // 폴더가 없거나 비어있으면 섹션 숨김 (빌드 에러 방지)
   }
 
-  // 이미지가 없으면 섹션 전체를 렌더링하지 않음
-  if (images.length === 0) return null
+  // showEmpty가 false이고 이미지가 없으면 섹션 전체를 렌더링하지 않음
+  if (images.length === 0 && !showEmpty) return null
 
   return (
     <section id="monthly-program" className="bg-background py-20 md:py-28">
@@ -60,20 +62,30 @@ export function MonthlyProgram({ campus, title = '이달의 프로그램' }: Pro
           </h2>
         </div>
 
-        {/* 이미지 목록: 세로 배열, 각 이미지 전체 너비 */}
-        <div className="flex flex-col gap-4">
-          {images.map((src, i) => (
-            <div key={i} className="relative w-full rounded-[12px] overflow-hidden">
-              <Image
-                src={src}
-                alt={`${title} ${i + 1}`}
-                width={1200}
-                height={800}
-                className="w-full h-auto"
-              />
-            </div>
-          ))}
-        </div>
+        {images.length === 0 ? (
+          /* 이미지가 없을 때 플레이스홀더 (showEmpty=true일 때만 도달) */
+          <div className="rounded-[16px] border border-border-color bg-background-subtle flex flex-col items-center justify-center py-24 text-center" style={{ borderWidth: '0.5px' }}>
+            <p className="text-lg font-semibold text-text-secondary mb-2">이달의 프로그램 준비 중</p>
+            <p className="text-sm text-text-secondary">
+              사진을 <code className="bg-navy/5 px-1 rounded text-xs">public/images/programs/{campus}/</code> 에 넣으면 자동으로 표시됩니다
+            </p>
+          </div>
+        ) : (
+          /* 이미지 목록: 세로 배열, 각 이미지 전체 너비 */
+          <div className="flex flex-col gap-4">
+            {images.map((src, i) => (
+              <div key={i} className="relative w-full rounded-[12px] overflow-hidden">
+                <Image
+                  src={src}
+                  alt={`${title} ${i + 1}`}
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
