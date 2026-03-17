@@ -37,11 +37,18 @@ const defaultSlides = [
     description: '',
     ctaLabel: '반값재수 알아보기',
   },
+  {
+    id: 5,
+    title: '세무사·노무사·기사시험\n4개월 단기합격의 비밀',
+    subtitle: '교시제 시간표 + 코멘터 관리 — 전문자격도 관리가 결과를 만듭니다',
+    description: '세무사 · 노무사 · 회계사 · 산업기사 · 각종 기사시험 전 방향 커버',
+    ctaLabel: '전문자격반 알아보기',
+  },
 ]
 
-export function HeroSlider() {
+export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlides } = {}) {
   const { data } = useSWR<SiteContent>('/api/content', fetcher)
-  const slides = data?.hero?.slides ?? defaultSlides
+  const slides = slidesProp ?? data?.hero?.slides ?? defaultSlides
 
   const [current, setCurrent] = useState(0)
   const [autoPlay, setAutoPlay] = useState(true)

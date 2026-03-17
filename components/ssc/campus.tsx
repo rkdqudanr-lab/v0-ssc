@@ -31,8 +31,8 @@ const campuses = [
   },
 ]
 
-export function Campus() {
-  const [active, setActive] = useState('원주')
+export function Campus({ filter }: { filter?: string } = {}) {
+  const [active, setActive] = useState(filter ?? '원주')
   const ref = useScrollReveal()
   const campus = campuses.find((c) => c.id === active)!
 
@@ -43,26 +43,28 @@ export function Campus() {
         <div className="mb-10 fade-in-up">
           <p className="eyebrow text-accent-blue mb-3">Campus</p>
           <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3 -tracking-tight">
-            가까운 캠퍼스에서 시작하세요
+            {filter ? `${filter} 캠퍼스` : '가까운 캠퍼스에서 시작하세요'}
           </h2>
         </div>
 
-        {/* Tab switcher — full width on mobile */}
-        <div className="w-full grid grid-cols-3 md:inline-flex p-1 bg-background rounded-lg border border-border-color mb-8 fade-in-up delay-100">
-          {campuses.map((c) => (
-            <button
-              key={c.id}
-              onClick={() => setActive(c.id)}
-              className={`py-2 rounded-md text-sm font-semibold transition-colors ${
-                active === c.id
-                  ? 'bg-navy text-white dark:bg-accent-blue'
-                  : 'text-text-secondary hover:text-text-primary'
-              }`}
-            >
-              {c.id}
-            </button>
-          ))}
-        </div>
+        {/* Tab switcher — only shown when not filtered to a single campus */}
+        {!filter && (
+          <div className="w-full grid grid-cols-3 md:inline-flex p-1 bg-background rounded-lg border border-border-color mb-8 fade-in-up delay-100">
+            {campuses.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setActive(c.id)}
+                className={`py-2 rounded-md text-sm font-semibold transition-colors ${
+                  active === c.id
+                    ? 'bg-navy text-white dark:bg-accent-blue'
+                    : 'text-text-secondary hover:text-text-primary'
+                }`}
+              >
+                {c.id}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Campus detail */}
         <div className="grid md:grid-cols-2 gap-6 fade-in-up delay-200">
