@@ -73,8 +73,8 @@ const defaultContent: SiteContent = {
   },
   contact: {
     phone: '033-766-7999',
-    address: '강원특별자치도 원주시 단계동 123-45',
-    kakaoLink: 'https://pf.kakao.com/_example',
+    address: '강원특별자치도 원주시 치악로 1793 농협건물 4층',
+    kakaoLink: 'https://pf.kakao.com',
   },
 }
 
