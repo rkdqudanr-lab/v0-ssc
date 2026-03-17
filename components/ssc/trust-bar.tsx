@@ -36,8 +36,8 @@ function StatItem({
 const defaultStats = [
   { value: '12', label: '년 운영' },
   { value: '3,200', label: '+ 누적 수강생' },
-  { value: '89', label: '% 합격률' },
-  { value: '4.9', label: '만족도' },
+  { value: '56', label: '% 합격률' },
+  { value: '4.9*', label: '합격생 만족도' },
 ]
 
 export function TrustBar() {
