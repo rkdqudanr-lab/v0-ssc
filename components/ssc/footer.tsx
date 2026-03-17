@@ -13,8 +13,8 @@ const quickLinks = [
 
 const campusAddresses = [
   { name: '원주', addr: '치악로 1793 농협건물 4층', phone: '033-766-7999' },
-  { name: '춘천', addr: '상담 후 안내', phone: '033-766-7999' },
-  { name: '충주', addr: '상담 후 안내', phone: '033-766-7999' },
+  { name: '춘천', addr: '퇴계로 249 5층', phone: '0507-1366-8881' },
+  { name: '충주', addr: '계명대로 248 4층', phone: '0507-1492-5574' },
 ]
 
 export function Footer() {
@@ -34,12 +34,12 @@ export function Footer() {
               SSC<span className="text-accent-blue dark:text-accent-amber">스파르타</span>
             </p>
             <p className="text-sm text-text-secondary leading-relaxed">
-              강원도 청년의 합격 파트너
+              당신의 합격 파트너
             </p>
             <p className="text-xs text-text-secondary mt-4 leading-relaxed">
               대표전화{' '}
-              <a href="tel:033-766-7999" className="hover:text-accent-blue transition-colors">
-                033-766-7999
+              <a href="문의(각 센터별 상이)" className="hover:text-accent-blue transition-colors">
+                033-766-7999(원주)
               </a>
             </p>
           </div>
