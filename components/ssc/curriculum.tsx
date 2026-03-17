@@ -4,14 +4,14 @@ import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 import { Sun, Coffee, Moon } from 'lucide-react'
 
 const phases = [
-  { step: '1단계', period: '1~3월', label: '기초 다지기' },
-  { step: '2단계', period: '4~6월', label: '과목별 심화' },
-  { step: '3단계', period: '7~9월', label: '실전 문제풀이' },
-  { step: '4단계', period: '10~11월', label: '최종 마무리 + 면접 코칭' },
+  { step: '1단계', period: '1~3개월', label: '기초 다지기' },
+  { step: '2단계', period: '4~6개월', label: '과목별 심화' },
+  { step: '3단계', period: '7~9개월', label: '실전 문제풀이' },
+  { step: '4단계', period: '10~11개월', label: '최종 마무리, 그리고 합격' },
 ]
 
 const subjects = [
-  '국어', '영어', '한국사', '행정법', '행정학', '형사법', '경찰학', '헌법', '소방학', '소방법규', '기타 기술직렬과목포함'
+  '개인별 맞춤 과목설정'
 ]
 
 const schedule = [
