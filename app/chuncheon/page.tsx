@@ -57,12 +57,14 @@ export default function ChuncheonPage() {
       <ScrollRevealInit />
       <Navbar />
       <HeroSlider slides={chuncheonSlides} />
+      {/* 이달의 프로그램: 사진 위치 → public/images/programs/chuncheon/ */}
       <MonthlyProgram campus="chuncheon" title="이달의 프로그램" />
       <TrustBar />
       <Programs location="춘천" />
       <Differentiation />
       {/* TODO: 춘천 합격후기 블로그 URL - 나중에 수정 필요 */}
       <Testimonials reviewUrl="https://blog.naver.com/guy0701/224198180485" />
+      {/* 내부시설: 사진 위치 → public/images/interior/chuncheon/ */}
       <InteriorFacilities campus="chuncheon" />
       <Curriculum />
       <Systems />

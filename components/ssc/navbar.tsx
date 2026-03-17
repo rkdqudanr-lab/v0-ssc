@@ -5,8 +5,10 @@ import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { label: '홈', href: '#hero' },
+  { label: '이달의 프로그램', href: '#monthly-program' },
   { label: '프로그램', href: '#programs' },
   { label: '합격후기', href: '#testimonials' },
+  { label: '내부시설', href: '#interior-facilities' },
   { label: '캠퍼스', href: '#campus' },
   { label: '상담신청', href: '#cta' },
 ]

@@ -57,11 +57,14 @@ export default function WonjuPage() {
       <ScrollRevealInit />
       <Navbar />
       <HeroSlider slides={wonjuSlides} />
+      {/* 이달의 프로그램: 사진 위치 → public/images/programs/wonju/ */}
       <MonthlyProgram campus="wonju" title="이달의 프로그램" />
       <TrustBar />
       <Programs location="원주" />
       <Differentiation />
+      {/* 합격후기 더보기 링크 - 원주 네이버 블로그 */}
       <Testimonials reviewUrl="https://blog.naver.com/guy0701/224198180485" />
+      {/* 내부시설: 사진 위치 → public/images/interior/wonju/ */}
       <InteriorFacilities campus="wonju" />
       <Curriculum />
       <Systems />
