@@ -51,8 +51,8 @@ export function CtaBanner() {
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-10">
             {[
               '무료 상담 가능',
-              '방문 없이 전화 상담 OK',
-              '당일 답변 보장',
+              '전화 상담은 상세 정보가 제한될수 있습니다',
+              '네이버 톡톡 문의가능',
             ].map((item) => (
               <span
                 key={item}
