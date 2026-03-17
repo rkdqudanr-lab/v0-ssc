@@ -23,8 +23,8 @@ const systems = [
   },
   {
     icon: BarChart2,
-    title: '전국 모의고사 + 문항 분석',
-    description: '커넥츠프랩 모의고사 현장 응시 + 문항별 데이터 분석 제공.',
+    title: '다양한 학습공간',
+    description: '3종의 학습공간으로 12시간의 학습을 쾌적하게',
   },
   {
     icon: MessageSquare,
