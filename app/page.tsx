@@ -4,10 +4,10 @@ import { TrustBar } from '@/components/ssc/trust-bar'
 import { Programs } from '@/components/ssc/programs'
 import { Differentiation } from '@/components/ssc/differentiation'
 import { Testimonials } from '@/components/ssc/testimonials'
-import { Curriculum } from '@/components/ssc/curriculum'
 import { Subsidy } from '@/components/ssc/subsidy'
-import { Systems } from '@/components/ssc/systems'
 import { Facilities } from '@/components/ssc/facilities'
+import { Curriculum } from '@/components/ssc/curriculum'
+import { Systems } from '@/components/ssc/systems'
 import { Campus } from '@/components/ssc/campus'
 import { Faq } from '@/components/ssc/faq'
 import { CtaBanner } from '@/components/ssc/cta-banner'
@@ -25,9 +25,9 @@ export default function Home() {
       <Programs />
       <Differentiation />
       <Testimonials />
+      <Subsidy />
       <Facilities />
       <Curriculum />
-      <Subsidy />
       <Systems />
       <Campus />
       <Faq />

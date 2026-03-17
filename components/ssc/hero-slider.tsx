@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import useSWR from 'swr'
 import type { SiteContent } from '@/lib/content'
@@ -42,17 +42,16 @@ const defaultSlides = [
 export function HeroSlider() {
   const { data } = useSWR<SiteContent>('/api/content', fetcher)
   const slides = data?.hero?.slides ?? defaultSlides
-  
+
   const [current, setCurrent] = useState(0)
   const [autoPlay, setAutoPlay] = useState(true)
+  const touchStartX = useRef<number | null>(null)
 
   useEffect(() => {
     if (!autoPlay) return
-
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length)
     }, 4000)
-
     return () => clearInterval(timer)
   }, [autoPlay, slides.length])
 
@@ -66,12 +65,34 @@ export function HeroSlider() {
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    setAutoPlay(false)
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const delta = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(delta) >= 50) {
+      if (delta > 0) {
+        goToSlide((current + 1) % slides.length)
+      } else {
+        goToSlide((current - 1 + slides.length) % slides.length)
+      }
+    } else {
+      setTimeout(() => setAutoPlay(true), 8000)
+    }
+    touchStartX.current = null
+  }
+
   return (
     <section
       id="hero"
       className="relative h-screen overflow-hidden bg-navy"
       onMouseEnter={() => setAutoPlay(false)}
       onMouseLeave={() => setAutoPlay(true)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Slides */}
       <div className="relative h-full">
@@ -99,14 +120,20 @@ export function HeroSlider() {
               <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="max-w-2xl">
                   <div className="fade-in-up">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight text-balance mb-6 whitespace-pre-wrap" style={{ color: '#ffffff' }}>
+                    <h1
+                      className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight text-balance mb-6 whitespace-pre-wrap display-title"
+                      style={{ color: '#ffffff' }}
+                    >
                       {slide.title}
                     </h1>
                     <p className="text-base sm:text-lg md:text-xl font-semibold mb-4" style={{ color: '#ffffff' }}>
                       {slide.subtitle}
                     </p>
                     {slide.description && (
-                      <p className="text-xs sm:text-sm md:text-base mb-8 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.85)' }}>
+                      <p
+                        className="text-xs sm:text-sm md:text-base mb-8 leading-relaxed max-w-xl"
+                        style={{ color: 'rgba(255,255,255,0.85)' }}
+                      >
                         {slide.description}
                       </p>
                     )}
@@ -138,11 +165,11 @@ export function HeroSlider() {
 
       {/* Controls */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
-        {/* Prev button */}
+        {/* Prev button — desktop only */}
         <button
           onClick={() => goToSlide((current - 1 + slides.length) % slides.length)}
           aria-label="Previous slide"
-          className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:border-white/60 transition-colors"
+          className="hidden md:flex w-10 h-10 rounded-full border border-white/30 text-white items-center justify-center hover:border-white/60 transition-colors"
         >
           <ChevronLeft size={20} />
         </button>
@@ -161,11 +188,11 @@ export function HeroSlider() {
           ))}
         </div>
 
-        {/* Next button */}
+        {/* Next button — desktop only */}
         <button
           onClick={() => goToSlide((current + 1) % slides.length)}
           aria-label="Next slide"
-          className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:border-white/60 transition-colors"
+          className="hidden md:flex w-10 h-10 rounded-full border border-white/30 text-white items-center justify-center hover:border-white/60 transition-colors"
         >
           <ChevronRight size={20} />
         </button>

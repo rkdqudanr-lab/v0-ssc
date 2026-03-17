@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { MapPin, Phone, Clock, ExternalLink } from 'lucide-react'
+import { MapPin, Phone, Clock } from 'lucide-react'
 
 const campuses = [
   {
@@ -10,7 +10,7 @@ const campuses = [
     address: '강원특별자치도 원주시 치악로 1793 농협건물 4층',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    kakaoUrl: 'https://map.kakao.com',
+    naverUrl: 'https://map.naver.com/v5/search/%EC%9B%90%EC%A3%BC%20%EC%B9%98%EC%95%85%EB%A1%9C%201793',
     mapQuery: '원주 치악로 1793',
   },
   {
@@ -18,7 +18,7 @@ const campuses = [
     address: '강원특별자치도 춘천시 퇴계로 249 5층',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    kakaoUrl: 'https://map.kakao.com',
+    naverUrl: 'https://map.naver.com/v5/search/SSC%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%20%EC%B6%98%EC%B2%9C',
     mapQuery: '춘천 SSC스파르타',
   },
   {
@@ -26,7 +26,7 @@ const campuses = [
     address: '충청북도 충주시 계명대로 283',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    kakaoUrl: 'https://map.kakao.com',
+    naverUrl: 'https://map.naver.com/v5/search/SSC%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%20%EC%B6%A9%EC%A3%BC',
     mapQuery: '충주 SSC스파르타',
   },
 ]
@@ -41,24 +41,23 @@ export function Campus() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <div className="mb-10 fade-in-up">
-          <p className="text-xs font-semibold text-accent-blue uppercase tracking-widest mb-3">
-            Campus
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3">
+          <p className="eyebrow text-accent-blue mb-3">Campus</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-navy dark:text-foreground text-balance mb-3 -tracking-tight">
             가까운 캠퍼스에서 시작하세요
           </h2>
         </div>
 
-        {/* Tab switcher */}
-        <div className="flex items-center gap-1 p-1 bg-background rounded-lg border border-border-color self-start inline-flex mb-8 fade-in-up delay-100">
+        {/* Tab switcher — full width on mobile */}
+        <div className="w-full grid grid-cols-3 md:inline-flex p-1 bg-background rounded-lg border border-border-color mb-8 fade-in-up delay-100">
           {campuses.map((c) => (
             <button
               key={c.id}
               onClick={() => setActive(c.id)}
-              className={`px-5 py-2 rounded-md text-sm font-semibold transition-colors ${active === c.id
-                ? 'bg-navy text-white dark:bg-accent-blue'
-                : 'text-text-secondary hover:text-text-primary'
-                }`}
+              className={`py-2 rounded-md text-sm font-semibold transition-colors ${
+                active === c.id
+                  ? 'bg-navy text-white dark:bg-accent-blue'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
             >
               {c.id}
             </button>
@@ -94,29 +93,24 @@ export function Campus() {
                 <span className="text-sm text-text-secondary leading-relaxed">{campus.hours}</span>
               </li>
             </ul>
-
-            <a
-              href={campus.kakaoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-accent-blue hover:underline mt-2"
-            >
-              네이버지도로 보기
-              <ExternalLink size={13} />
-            </a>
           </div>
 
-          {/* Map placeholder */}
-          <div
-            className="rounded-[12px] border border-border-color bg-background-blue-soft flex items-center justify-center min-h-56"
+          {/* Naver map link button (replaces map placeholder) */}
+          <a
+            href={campus.naverUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-[12px] border border-border-color bg-background-blue-soft flex flex-col items-center justify-center min-h-56 gap-4 hover:bg-accent-blue/10 transition-colors group"
             style={{ borderWidth: '0.5px' }}
           >
+            <MapPin size={40} className="text-accent-blue group-hover:scale-110 transition-transform" strokeWidth={1.2} />
             <div className="text-center">
-              <MapPin size={32} className="text-accent-blue mx-auto mb-3" strokeWidth={1} />
-              <p className="text-sm font-semibold text-text-primary">{campus.id} 캠퍼스</p>
-              <p className="text-xs text-text-secondary mt-1">지도를 불러오는 중…</p>
+              <p className="text-sm font-bold text-text-primary">{campus.id} 캠퍼스</p>
+              <p className="text-xs text-accent-blue font-semibold mt-1">
+                📍 네이버 지도에서 보기 →
+              </p>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </section>

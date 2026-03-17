@@ -32,7 +32,7 @@ export function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-background/90 backdrop-blur-md border-b border-border-color shadow-sm'
+            ? 'bg-white/95 backdrop-blur-md border-b border-border-color shadow-sm'
             : 'bg-transparent'
         }`}
       >
@@ -40,9 +40,11 @@ export function Navbar() {
           {/* Logo */}
           <button
             onClick={() => handleLink('#hero')}
-            className="font-bold text-xl tracking-tight text-white dark:text-white"
+            className={`font-bold text-xl tracking-tight transition-colors duration-300 ${
+              scrolled ? 'text-navy' : 'text-white'
+            }`}
           >
-            SSC<span className="text-white dark:text-white">스파르타</span>
+            SSC<span className={scrolled ? 'text-accent-blue' : 'text-white'}>스파르타</span>
           </button>
 
           {/* Desktop links */}
@@ -51,7 +53,11 @@ export function Navbar() {
               <li key={link.href}>
                 <button
                   onClick={() => handleLink(link.href)}
-                  className="text-sm font-medium text-text-secondary hover:text-navy dark:hover:text-accent-blue transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    scrolled
+                      ? 'text-text-secondary hover:text-navy'
+                      : 'text-white/80 hover:text-white'
+                  }`}
                 >
                   {link.label}
                 </button>
@@ -62,14 +68,16 @@ export function Navbar() {
           {/* Desktop CTA */}
           <button
             onClick={() => handleLink('#cta')}
-            className="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-navy text-text-on-navy text-sm font-semibold hover:bg-navy/90 transition-colors dark:bg-accent-blue dark:text-white"
+            className="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-navy text-white text-sm font-semibold hover:bg-navy/90 transition-colors dark:bg-accent-blue dark:text-white"
           >
             무료 상담
           </button>
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 text-text-primary"
+            className={`md:hidden p-2 min-w-[48px] min-h-[48px] flex items-center justify-center transition-colors ${
+              scrolled ? 'text-text-primary' : 'text-white'
+            }`}
             onClick={() => setOpen(true)}
             aria-label="메뉴 열기"
           >
@@ -88,10 +96,14 @@ export function Navbar() {
           />
           <aside className="w-72 h-full bg-background flex flex-col shadow-xl">
             <div className="flex items-center justify-between px-6 py-5 border-b border-border-color">
-              <span className="font-bold text-lg text-white dark:text-white">
-                SSC<span className="text-white dark:text-white">스파르타</span>
+              <span className="font-bold text-lg text-navy dark:text-white">
+                SSC<span className="text-accent-blue">스파르타</span>
               </span>
-              <button onClick={() => setOpen(false)} aria-label="메뉴 닫기">
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="메뉴 닫기"
+                className="p-2 min-w-[48px] min-h-[48px] flex items-center justify-center"
+              >
                 <X size={22} className="text-text-secondary" />
               </button>
             </div>
@@ -100,7 +112,7 @@ export function Navbar() {
                 <li key={link.href}>
                   <button
                     onClick={() => handleLink(link.href)}
-                    className="w-full text-left py-3 text-base font-medium text-text-primary hover:text-navy dark:hover:text-accent-blue border-b border-border-color/50 transition-colors"
+                    className="w-full text-left py-4 min-h-[48px] text-base font-medium text-text-primary hover:text-navy dark:hover:text-accent-blue border-b border-border-color/50 transition-colors"
                   >
                     {link.label}
                   </button>
