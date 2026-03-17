@@ -18,8 +18,8 @@ const defaultSlides = [
   },
   {
     id: 2,
-    title: '원주 유일 커넥츠프랩(공단기) 파트너',
-    subtitle: '합격자에게 물어보세요, 합격자는 스파르타 했습니다.',
+    title: '원주 유일 노량진 커넥츠프랩(공단기) 파트너',
+    subtitle: '공무원 합격자에게 물어보세요, 합격자는 스파르타 했습니다.',
     description: '',
     ctaLabel: '공무원 합격반 알아보기',
   },
