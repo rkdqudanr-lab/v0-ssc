@@ -2,20 +2,30 @@
 
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
-const navLinks = [
-  { label: '홈', href: '#hero' },
-  { label: '이달의 프로그램', href: '#monthly-program' },
-  { label: '프로그램', href: '#programs' },
-  { label: '합격후기', href: '#testimonials' },
-  { label: '내부시설', href: '#interior-facilities' },
-  { label: '캠퍼스', href: '#campus' },
-  { label: '상담신청', href: '#cta' },
-]
+const CAMPUSES = ['wonju', 'chuncheon', 'chungju'] as const
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
+
+  // 현재 경로에서 캠퍼스 식별
+  const campusOnPath = CAMPUSES.find((c) => pathname.startsWith(`/${c}`))
+  const isSubPage = campusOnPath && pathname !== `/${campusOnPath}`
+  const basePath = campusOnPath ? `/${campusOnPath}` : ''
+
+  const navLinks = [
+    { label: '홈', href: '#hero' },
+    { label: '이달의 프로그램', href: campusOnPath ? `/${campusOnPath}/programs` : '#monthly-program' },
+    { label: '프로그램', href: '#programs' },
+    { label: '합격후기', href: '#testimonials' },
+    { label: '내부시설', href: campusOnPath ? `/${campusOnPath}/interior` : '#interior-facilities' },
+    { label: '캠퍼스', href: '#campus' },
+    { label: '상담신청', href: '#cta' },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -25,8 +35,16 @@ export function Navbar() {
 
   const handleLink = (href: string) => {
     setOpen(false)
-    const el = document.querySelector(href)
-    el?.scrollIntoView({ behavior: 'smooth' })
+    if (href.startsWith('/')) {
+      // 페이지 이동
+      router.push(href)
+    } else if (isSubPage) {
+      // 서브페이지(interior/programs)에서 앵커 클릭 → 메인 캠퍼스 페이지로 이동
+      router.push(`${basePath}${href}`)
+    } else {
+      // 같은 페이지 내 앵커 스크롤
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (
