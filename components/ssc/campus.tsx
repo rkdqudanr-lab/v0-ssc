@@ -10,15 +10,15 @@ const campuses = [
     address: '강원특별자치도 원주시 치악로 1793 농협건물 4층',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    naverUrl: 'https://map.naver.com/v5/search/%EC%9B%90%EC%A3%BC%20%EC%B9%98%EC%95%85%EB%A1%9C%201793',
-    mapQuery: '원주 치악로 1793',
+    naverUrl: 'https://naver.me/5Q3BqTPH',
+    mapQuery: '원주 SSC스파르타',
   },
   {
     id: '춘천',
     address: '강원특별자치도 춘천시 퇴계로 249 5층',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    naverUrl: 'https://map.naver.com/v5/search/SSC%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%20%EC%B6%98%EC%B2%9C',
+    naverUrl: 'https://naver.me/5RhgAeoi',
     mapQuery: '춘천 SSC스파르타',
   },
   {
@@ -26,7 +26,7 @@ const campuses = [
     address: '충청북도 충주시 계명대로 283',
     phone: '033-766-7999',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    naverUrl: 'https://map.naver.com/v5/search/SSC%EC%8A%A4%ED%8C%8C%EB%A5%B4%ED%83%80%20%EC%B6%A9%EC%A3%BC',
+    naverUrl: 'https://naver.me/xmxZQakb',
     mapQuery: '충주 SSC스파르타',
   },
 ]
