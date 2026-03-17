@@ -94,14 +94,14 @@ export function HeroSlider() {
               <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="max-w-2xl">
                   <div className="fade-in-up">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-balance mb-4 whitespace-pre-wrap" style={{ color: '#ffffff' }}>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold leading-tight text-balance mb-6 whitespace-pre-wrap" style={{ color: '#ffffff' }}>
                       {slide.title}
                     </h1>
-                    <p className="text-lg sm:text-xl font-semibold mb-4" style={{ color: '#ffffff' }}>
+                    <p className="text-base sm:text-lg md:text-xl font-semibold mb-4" style={{ color: '#ffffff' }}>
                       {slide.subtitle}
                     </p>
                     {slide.description && (
-                      <p className="text-sm sm:text-base mb-10 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                      <p className="text-xs sm:text-sm md:text-base mb-8 leading-relaxed max-w-xl" style={{ color: 'rgba(255,255,255,0.85)' }}>
                         {slide.description}
                       </p>
                     )}

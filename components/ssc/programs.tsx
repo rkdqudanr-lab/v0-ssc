@@ -144,10 +144,10 @@ export function Programs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section heading */}
         <div className="mb-16 fade-in-up text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-navy dark:text-foreground mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-navy dark:text-foreground mb-3">
             하나의 목표, 네 가지 길
           </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-text-secondary max-w-2xl mx-auto">
             어떤 시험이든 — SSC스파르타의 시스템이 함께합니다
           </p>
         </div>
@@ -184,10 +184,10 @@ export function Programs() {
 
               {/* Title & Subtitle */}
               <div>
-                <h3 className="text-2xl font-bold text-navy dark:text-white mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-navy dark:text-white mb-2">
                   {program.title}
                 </h3>
-                <p className="text-sm text-text-secondary">{program.subtitle}</p>
+                <p className="text-xs sm:text-sm text-text-secondary">{program.subtitle}</p>
               </div>
 
               {/* Description */}
@@ -237,15 +237,15 @@ export function Programs() {
               {program.features.map((feature, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 px-5 py-4 rounded-lg border border-border-color bg-background-subtle"
+                  className="flex items-start gap-3 px-4 sm:px-5 py-3 sm:py-4 rounded-lg border border-border-color bg-background-subtle"
                   style={{ borderWidth: '0.5px' }}
                 >
                   <Check
-                    size={20}
+                    size={18}
                     className="text-accent-blue flex-shrink-0 mt-0.5"
                     strokeWidth={2.5}
                   />
-                  <span className="text-base font-medium text-text-primary leading-relaxed">
+                  <span className="text-sm sm:text-base font-medium text-text-primary leading-relaxed">
                     {feature}
                   </span>
                 </div>
@@ -263,11 +263,11 @@ export function Programs() {
 
             {/* Single Testimonial */}
             {(program as any).testimonial && (
-              <div className="px-6 py-6 rounded-lg bg-navy/5 border border-navy/10">
-                <blockquote className="text-base font-semibold text-navy dark:text-white mb-3 whitespace-pre-line">
+              <div className="px-4 sm:px-6 py-4 sm:py-6 rounded-lg bg-navy/5 border border-navy/10">
+                <blockquote className="text-sm sm:text-base font-semibold text-navy dark:text-white mb-2 sm:mb-3 whitespace-pre-line">
                   "{(program as any).testimonial.quote}"
                 </blockquote>
-                <p className="text-sm text-text-secondary">
+                <p className="text-xs sm:text-sm text-text-secondary">
                   — {(program as any).testimonial.author}
                 </p>
               </div>
@@ -275,10 +275,10 @@ export function Programs() {
 
             {/* Multiple Testimonials */}
             {(program as any).testimonials && (
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {(program as any).testimonials.map((t: any, i: number) => (
-                  <div key={i} className="px-6 py-6 rounded-lg bg-navy/5 border border-navy/10">
-                    <blockquote className="text-sm font-semibold text-navy dark:text-white mb-2 whitespace-pre-line">
+                  <div key={i} className="px-4 sm:px-6 py-4 sm:py-6 rounded-lg bg-navy/5 border border-navy/10">
+                    <blockquote className="text-xs sm:text-sm font-semibold text-navy dark:text-white mb-1 sm:mb-2 whitespace-pre-line">
                       "{t.quote}"
                     </blockquote>
                     <p className="text-xs text-text-secondary">— {t.author}</p>
@@ -289,11 +289,11 @@ export function Programs() {
 
             {/* Pull Quote */}
             {(program as any).pullquote && (
-              <blockquote className="px-6 py-8 rounded-lg bg-accent-blue/5 border-l-4 border-accent-blue">
-                <p className="text-base font-semibold text-navy dark:text-white leading-relaxed mb-3 whitespace-pre-line">
+              <blockquote className="px-4 sm:px-6 py-6 sm:py-8 rounded-lg bg-accent-blue/5 border-l-4 border-accent-blue">
+                <p className="text-sm sm:text-base font-semibold text-navy dark:text-white leading-relaxed mb-2 sm:mb-3 whitespace-pre-line">
                   "{(program as any).pullquote}"
                 </p>
-                <p className="text-sm text-text-secondary">
+                <p className="text-xs sm:text-sm text-text-secondary">
                   — {(program as any).author}
                 </p>
               </blockquote>
