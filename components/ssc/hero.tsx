@@ -25,16 +25,14 @@ export function Hero() {
 
           {/* H1 */}
           <h1 className="text-4xl sm:text-5xl md:text-[52px] font-bold leading-tight text-navy dark:text-foreground text-balance mb-6 fade-in-up delay-100">
-            강원도 청년의 합격을,
+            공부 의지에만 맡기지 않습니다.
             <br />
-            <span className="text-accent-blue">SSC스파르타</span>가 설계합니다
+            환경·시간·생활까지 함께 관리합니다.
           </h1>
 
           {/* Sub-headline */}
           <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-10 max-w-xl fade-in-up delay-200">
-            원주 · 춘천 · 충주 — 노량진 프로그램을 그대로,
-            <br className="hidden sm:block" />
-            강원도 밀착 관리로 완성
+            원주 · 춘천 · 충주 — 강원도 청년의 합격 파트너 SSC스파르타
           </p>
 
           {/* CTAs */}

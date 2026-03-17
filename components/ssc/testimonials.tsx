@@ -7,23 +7,17 @@ const testimonials = [
   {
     name: '김○○',
     result: '2025 강원 경찰직 합격',
-    quote: '서울 갈 필요 없었어요. 커리큘럼이 달랐습니다.',
-    detail:
-      '노량진 커리큘럼을 그대로 쓰는데 관리는 훨씬 빡세게 해줬어요. 처음엔 반신반의했지만 합격하고 나니 선택이 옳았다고 확신했습니다.',
+    quote: '서울 갈 필요 없었어요. 커리큘럼이 달랐고 관리가 달랐습니다.',
   },
   {
     name: '이○○',
     result: '2024 국가직 9급 합격',
-    quote: '코멘터 선생님이 매일 체크해줘서 흐트러지지 않았어요.',
-    detail:
-      '의지가 약해지는 순간이 몇 번 있었는데 그때마다 플래너 점검이 저를 잡아줬어요. 혼자였으면 분명 중도 포기했을 것 같아요.',
+    quote: '코멘터 선생님이 매일 플래너 체크해줘서 혼자라는 느낌이 없었어요.',
   },
   {
     name: '박○○',
     result: '2025 지방직 합격',
     quote: '합격의 전당에 내 이름 붙이는 날이 올 줄 몰랐어요.',
-    detail:
-      '재수까지 하면서 많이 힘들었는데 SSC스파르타 와서 관리 시스템에 몸을 맡기고 나서 처음으로 공부가 제대로 됐어요.',
   },
 ]
 
@@ -55,8 +49,7 @@ export function Testimonials() {
               <blockquote className="text-base font-semibold text-text-primary leading-snug">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
-              <p className="text-sm text-text-secondary leading-relaxed flex-1">{t.detail}</p>
-              <div className="flex flex-col gap-0.5 border-t border-border-color pt-4">
+              <div className="flex flex-col gap-0.5 border-t border-border-color pt-4 mt-auto">
                 <span className="text-sm font-bold text-text-primary">{t.name}</span>
                 <span className="text-xs text-accent-blue font-medium">{t.result}</span>
               </div>
