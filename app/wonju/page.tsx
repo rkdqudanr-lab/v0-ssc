@@ -1,10 +1,11 @@
 import { Navbar } from '@/components/ssc/navbar'
 import { HeroSlider } from '@/components/ssc/hero-slider'
+import { MonthlyProgram } from '@/components/ssc/monthly-program'
 import { TrustBar } from '@/components/ssc/trust-bar'
 import { Programs } from '@/components/ssc/programs'
 import { Differentiation } from '@/components/ssc/differentiation'
 import { Testimonials } from '@/components/ssc/testimonials'
-import { Facilities } from '@/components/ssc/facilities'
+import { InteriorFacilities } from '@/components/ssc/interior-facilities'
 import { Curriculum } from '@/components/ssc/curriculum'
 import { Systems } from '@/components/ssc/systems'
 import { Campus } from '@/components/ssc/campus'
@@ -17,6 +18,7 @@ import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
 const wonjuSlides = [
   {
     id: 1,
+    image: '/images/campus-wonju.jpg',
     title: '원주 유일\n노량진 커넥츠프랩(공단기) 파트너',
     subtitle: '공무원 합격자에게 물어보세요, 합격자는 스파르타 했습니다.',
     description: '국가직 · 지방직 · 경찰 · 소방 · 군무원 전 직렬 커버',
@@ -25,6 +27,7 @@ const wonjuSlides = [
   },
   {
     id: 2,
+    image: '/images/campus-wonju.jpg',
     title: '합리적 금액의 반값재수',
     subtitle: '생활 리듬이 무너지면 강의도 소용없어요. 관리가 먼저입니다.',
     description: '불필요한 실강 비용을 덜어내고 진짜 필요한 관리에만 집중',
@@ -32,6 +35,7 @@ const wonjuSlides = [
   },
   {
     id: 3,
+    image: '/images/campus-wonju.jpg',
     title: '임용에서 강합니다.\n매년 합격자를 배출합니다',
     subtitle: '초등·중등·유아 임용 — 마지막 60일이 합격을 가릅니다',
     description: '',
@@ -39,6 +43,7 @@ const wonjuSlides = [
   },
   {
     id: 4,
+    image: '/images/campus-wonju.jpg',
     title: '세무사·노무사·기사시험\n4개월 단기합격의 비밀',
     subtitle: '교시제 시간표 + 코멘터 관리 — 전문자격도 관리가 결과를 만듭니다',
     description: '세무사 · 노무사 · 회계사 · 산업기사 · 각종 기사시험 전 방향 커버',
@@ -52,11 +57,12 @@ export default function WonjuPage() {
       <ScrollRevealInit />
       <Navbar />
       <HeroSlider slides={wonjuSlides} />
+      <MonthlyProgram campus="wonju" title="이달의 프로그램" />
       <TrustBar />
       <Programs />
       <Differentiation />
-      <Testimonials />
-      <Facilities />
+      <Testimonials reviewUrl="https://blog.naver.com/guy0701/224198180485" />
+      <InteriorFacilities campus="wonju" />
       <Curriculum />
       <Systems />
       <Campus filter="원주" />

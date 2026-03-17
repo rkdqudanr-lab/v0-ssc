@@ -21,7 +21,7 @@ const testimonials = [
   },
 ]
 
-export function Testimonials() {
+export function Testimonials({ reviewUrl }: { reviewUrl?: string } = {}) {
   const ref = useScrollReveal()
 
   return (
@@ -65,6 +65,23 @@ export function Testimonials() {
             </p>
           </div>
         </div>
+
+        {/* 더보기 링크 */}
+        {reviewUrl && (
+          <div className="fade-in-up delay-500 flex justify-center mt-8">
+            <a
+              href={reviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border-color text-sm font-medium text-text-secondary hover:text-text-primary hover:border-accent-blue transition-colors"
+            >
+              합격후기 더보기
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 7H11.5M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
     </section>
   )
