@@ -4,7 +4,6 @@ import { TrustBar } from '@/components/ssc/trust-bar'
 import { Programs } from '@/components/ssc/programs'
 import { Differentiation } from '@/components/ssc/differentiation'
 import { Testimonials } from '@/components/ssc/testimonials'
-import { Subsidy } from '@/components/ssc/subsidy'
 import { Facilities } from '@/components/ssc/facilities'
 import { Curriculum } from '@/components/ssc/curriculum'
 import { Systems } from '@/components/ssc/systems'
@@ -57,7 +56,6 @@ export default function ChuncheonPage() {
       <Programs />
       <Differentiation />
       <Testimonials />
-      <Subsidy />
       <Facilities />
       <Curriculum />
       <Systems />
