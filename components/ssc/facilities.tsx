@@ -39,7 +39,10 @@ const facilities = [
   },
 ]
 
-export function Facilities() {
+type FacilityItem = typeof facilities[number]
+
+export function Facilities({ facilities: facilitiesProp }: { facilities?: FacilityItem[] } = {}) {
+  const items = facilitiesProp ?? facilities
   const ref = useScrollReveal()
 
   return (
@@ -57,7 +60,7 @@ export function Facilities() {
 
         {/* Facility cards grid — 2x2 on mobile, 4 col on lg */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {facilities.map((facility, i) => (
+          {items.map((facility, i) => (
             <div
               key={facility.id}
               className={`fade-in-up delay-${(i + 1) * 100} rounded-[12px] border border-border-color bg-background-subtle flex flex-col overflow-hidden`}
