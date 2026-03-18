@@ -19,7 +19,7 @@ export type FacilityItem = {
   description: string
 }
 
-const defaultFacilities: FacilityItem[] = [
+export const defaultFacilities: FacilityItem[] = [
   {
     id: 1,
     icon: 'BookOpen',

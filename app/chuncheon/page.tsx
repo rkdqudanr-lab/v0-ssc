@@ -8,7 +8,7 @@ import { TrustBar } from '@/components/ssc/trust-bar'
 import { Programs } from '@/components/ssc/programs'
 import { Differentiation } from '@/components/ssc/differentiation'
 import { Testimonials } from '@/components/ssc/testimonials'
-import { Facilities } from '@/components/ssc/facilities'
+import { Facilities, defaultFacilities } from '@/components/ssc/facilities'
 import { Curriculum } from '@/components/ssc/curriculum'
 import { Systems } from '@/components/ssc/systems'
 import { Campus } from '@/components/ssc/campus'
@@ -17,6 +17,20 @@ import { CtaBanner } from '@/components/ssc/cta-banner'
 import { Footer } from '@/components/ssc/footer'
 import { MobileCtaBar } from '@/components/ssc/mobile-cta-bar'
 import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
+
+/** public/images/facility/{campus}/ 폴더에서 4-카드 시설 이미지 경로 목록을 읽어옵니다 */
+function getFacilityImages(campus: string): string[] {
+  const dir = path.join(process.cwd(), 'public', 'images', 'facility', campus)
+  try {
+    return fs
+      .readdirSync(dir)
+      .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
+      .sort()
+      .map((f) => `/images/facility/${campus}/${f}`)
+  } catch {
+    return []
+  }
+}
 
 /** public/images/maincard/{campus}/ 폴더에서 이미지 경로 목록을 읽어옵니다 */
 function getMaincardImages(campus: string): string[] {
@@ -76,6 +90,11 @@ export default function ChuncheonPage() {
     image: maincardImages[i] ?? slide.image,
   }))
 
+  const facilityImages = getFacilityImages('chuncheon')
+  const facilitiesWithImages = facilityImages.length > 0
+    ? defaultFacilities.map((f, i) => ({ ...f, image: facilityImages[i] ?? f.image }))
+    : undefined
+
   return (
     <main className="overflow-x-hidden pb-16 md:pb-0">
       <ScrollRevealInit />
@@ -116,8 +135,8 @@ export default function ChuncheonPage() {
       <Testimonials reviewUrl="https://blog.naver.com/guy0701/224198180485" />
 
       {/* 내부시설 미리보기 (4-카드 그리드) + 더 알아보기 → /chuncheon/interior 페이지로 이동 */}
-      {/* 📁 내부시설 사진 위치: public/images/interior/chuncheon/ */}
-      <Facilities />
+      {/* 📁 4-카드 사진 위치: public/images/facility/chuncheon/ (01~04 번호 순서대로) */}
+      <Facilities facilities={facilitiesWithImages} />
       <div className="bg-background pb-16 flex justify-center -mt-8">
         <Link
           href="/chuncheon/interior"
