@@ -1,14 +1,34 @@
+import fs from 'fs'
+import path from 'path'
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { Navbar } from '@/components/ssc/navbar'
-import { Facilities } from '@/components/ssc/facilities'
+import { Facilities, defaultFacilities } from '@/components/ssc/facilities'
 import { InteriorFacilities } from '@/components/ssc/interior-facilities'
 import { CtaBanner } from '@/components/ssc/cta-banner'
 import { Footer } from '@/components/ssc/footer'
 import { MobileCtaBar } from '@/components/ssc/mobile-cta-bar'
 import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
 
+function getFacilityImages(campus: string): string[] {
+  const dir = path.join(process.cwd(), 'public', 'images', 'facility', campus)
+  try {
+    return fs
+      .readdirSync(dir)
+      .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
+      .sort()
+      .map((f) => `/images/facility/${campus}/${f}`)
+  } catch {
+    return []
+  }
+}
+
 export default function ChuncheonInteriorPage() {
+  const facilityImages = getFacilityImages('chuncheon')
+  const facilitiesWithImages = facilityImages.length > 0
+    ? defaultFacilities.map((f, i) => ({ ...f, image: facilityImages[i] ?? f.image }))
+    : undefined
+
   return (
     <main className="overflow-x-hidden pb-16 md:pb-0">
       <ScrollRevealInit />
@@ -30,7 +50,8 @@ export default function ChuncheonInteriorPage() {
       </div>
 
       {/* 시설 4-카드 그리드 (사진 없어도 항상 표시) */}
-      <Facilities />
+      {/* 📁 4-카드 사진 위치: public/images/facility/chuncheon/ (01~04 번호 순서대로) */}
+      <Facilities facilities={facilitiesWithImages} />
 
       {/* 실내 사진 갤러리 (사진 넣으면 자동 표시) */}
       {/* 📁 사진 위치: public/images/interior/chuncheon/ */}
