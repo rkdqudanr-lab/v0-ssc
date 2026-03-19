@@ -18,6 +18,7 @@ import { CtaBanner } from '@/components/ssc/cta-banner'
 import { Footer } from '@/components/ssc/footer'
 import { MobileCtaBar } from '@/components/ssc/mobile-cta-bar'
 import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
+import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 /** public/images/facility/{campus}/ 폴더에서 4-카드 시설 이미지 경로 목록을 읽어옵니다 */
 function getFacilityImages(campus: string): string[] {
@@ -152,9 +153,9 @@ export default function ChuncheonPage() {
       <Systems />
       <Campus filter="춘천" />
       <Faq />
-      <CtaBanner />
+      <CtaBanner phone={CAMPUS_CONFIG.chuncheon.phone} naverTalkUrl={CAMPUS_CONFIG.chuncheon.naverTalkUrl} />
       <Footer />
-      <MobileCtaBar />
+      <MobileCtaBar phone={CAMPUS_CONFIG.chuncheon.phone} kakaoUrl={CAMPUS_CONFIG.chuncheon.kakaoUrl} />
     </main>
   )
 }

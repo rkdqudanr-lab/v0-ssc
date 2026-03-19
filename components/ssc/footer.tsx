@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Instagram, ExternalLink, ChevronDown } from 'lucide-react'
+import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 const quickLinks = [
   { label: '홈', href: '#hero' },
@@ -11,11 +12,11 @@ const quickLinks = [
   { label: '상담신청', href: '#cta' },
 ]
 
-const campusAddresses = [
-  { name: '원주', addr: '치악로 1793 농협건물 4층', phone: '033-766-7999' },
-  { name: '춘천', addr: '퇴계로 249 5층', phone: '0507-1366-8881' },
-  { name: '충주', addr: '계명대로 248 4층', phone: '0507-1492-5574' },
-]
+const campusAddresses = Object.values(CAMPUS_CONFIG).map((c) => ({
+  name: c.name,
+  addr: c.addrShort,
+  phone: c.phone,
+}))
 
 export function Footer() {
   const [campusOpen, setCampusOpen] = useState(false)
@@ -38,8 +39,8 @@ export function Footer() {
             </p>
             <p className="text-xs text-text-secondary mt-4 leading-relaxed">
               대표전화{' '}
-              <a href="문의(각 센터별 상이)" className="hover:text-accent-blue transition-colors">
-                033-766-7999(원주)
+              <a href={`tel:${CAMPUS_CONFIG.wonju.phone}`} className="hover:text-accent-blue transition-colors">
+                {CAMPUS_CONFIG.wonju.phone}(원주)
               </a>
             </p>
           </div>
