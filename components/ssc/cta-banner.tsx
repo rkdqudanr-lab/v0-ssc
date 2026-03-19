@@ -2,8 +2,17 @@
 
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 import { Phone } from 'lucide-react'
+import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
-export function CtaBanner() {
+interface CtaBannerProps {
+  phone?: string
+  naverTalkUrl?: string
+}
+
+export function CtaBanner({
+  phone = CAMPUS_CONFIG.wonju.phone,
+  naverTalkUrl = CAMPUS_CONFIG.wonju.naverTalkUrl,
+}: CtaBannerProps) {
   const ref = useScrollReveal()
 
   return (
@@ -22,23 +31,23 @@ export function CtaBanner() {
           <p className="text-white/60 text-sm leading-relaxed mb-8">
             방문 상담 · 네이버 톡톡 · 전화{' '}
             <a
-              href="tel:033-766-7999"
+              href={`tel:${phone}`}
               className="text-white/90 font-semibold hover:text-accent-amber transition-colors"
             >
-              033-766-7999
+              {phone}
             </a>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href="tel:033-766-7999"
+              href={`tel:${phone}`}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-accent-amber text-navy font-bold text-sm hover:bg-accent-amber/90 transition-colors"
             >
               <Phone size={16} />
               지금 자리 잡기 →
             </a>
             <a
-              href="https://talk.naver.com"
+              href={naverTalkUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-8 py-4 rounded-xl border border-white/20 text-white font-semibold text-sm hover:bg-white/10 transition-colors"

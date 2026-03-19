@@ -4,41 +4,14 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 import { MapPin, Phone, Clock } from 'lucide-react'
+import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
-const campuses = [
-  {
-    id: '원주',
-    address: '강원특별자치도 원주시 치악로 1793 농협건물 4층',
-    phone: '033-766-7999',
-    hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    naverUrl: 'https://naver.me/5Q3BqTPH',
-    mapQuery: '원주 SSC스파르타',
-    image: '/images/campus-wonju.jpg',
-  },
-  {
-    id: '춘천',
-    address: '강원특별자치도 춘천시 퇴계로 249 5층',
-    phone: '033-766-7999',
-    hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    naverUrl: 'https://naver.me/5RhgAeoi',
-    mapQuery: '춘천 SSC스파르타',
-    image: '/images/campus-chuncheon.jpg',
-  },
-  {
-    id: '충주',
-    address: '충청북도 충주시 계명대로 283',
-    phone: '033-766-7999',
-    hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    naverUrl: 'https://naver.me/xmxZQakb',
-    mapQuery: '충주 SSC스파르타',
-    image: '/images/campus-chungju.jpg',
-  },
-]
+const campuses = Object.values(CAMPUS_CONFIG)
 
 export function Campus({ filter }: { filter?: string } = {}) {
   const [active, setActive] = useState(filter ?? '원주')
   const ref = useScrollReveal()
-  const campus = campuses.find((c) => c.id === active)!
+  const campus = campuses.find((c) => c.name === active)!
 
   return (
     <section id="campus" className="bg-background-subtle py-20 md:py-28" ref={ref}>
@@ -56,15 +29,15 @@ export function Campus({ filter }: { filter?: string } = {}) {
           <div className="w-full grid grid-cols-3 md:inline-flex p-1 bg-background rounded-lg border border-border-color mb-8 fade-in-up delay-100">
             {campuses.map((c) => (
               <button
-                key={c.id}
-                onClick={() => setActive(c.id)}
+                key={c.name}
+                onClick={() => setActive(c.name)}
                 className={`py-2 rounded-md text-sm font-semibold transition-colors ${
-                  active === c.id
+                  active === c.name
                     ? 'bg-navy text-white dark:bg-accent-blue'
                     : 'text-text-secondary hover:text-text-primary'
                 }`}
               >
-                {c.id}
+                {c.name}
               </button>
             ))}
           </div>
@@ -78,7 +51,7 @@ export function Campus({ filter }: { filter?: string } = {}) {
             style={{ borderWidth: '0.5px' }}
           >
             <h3 className="text-xl font-bold text-navy dark:text-foreground">
-              {campus.id} 캠퍼스
+              {campus.name} 캠퍼스
             </h3>
             <ul className="flex flex-col gap-4">
               <li className="flex items-start gap-3">
@@ -103,7 +76,7 @@ export function Campus({ filter }: { filter?: string } = {}) {
 
           {/* Naver map link — with optional building photo background */}
           <a
-            href={campus.naverUrl}
+            href={campus.naverMapUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="relative rounded-[12px] border border-border-color overflow-hidden flex flex-col items-center justify-center min-h-56 gap-4 hover:opacity-90 transition-opacity group"
@@ -112,7 +85,7 @@ export function Campus({ filter }: { filter?: string } = {}) {
             {/* Building photo */}
             <Image
               src={campus.image}
-              alt={`${campus.id} 캠퍼스`}
+              alt={`${campus.name} 캠퍼스`}
               fill
               className="object-cover"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
@@ -122,7 +95,7 @@ export function Campus({ filter }: { filter?: string } = {}) {
             {/* Content */}
             <div className="relative z-10 text-center">
               <MapPin size={36} className="text-white mx-auto mb-2 group-hover:scale-110 transition-transform" strokeWidth={1.2} />
-              <p className="text-sm font-bold text-white">{campus.id} 캠퍼스</p>
+              <p className="text-sm font-bold text-white">{campus.name} 캠퍼스</p>
               <p className="text-xs text-white/80 font-semibold mt-1">📍 네이버 지도에서 보기 →</p>
             </div>
           </a>
