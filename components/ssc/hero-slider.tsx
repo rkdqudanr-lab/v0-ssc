@@ -8,7 +8,18 @@ import type { SiteContent } from '@/lib/content'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-const defaultSlides = [
+type Slide = {
+  id: number
+  title: string
+  subtitle: string
+  description: string
+  ctaLabel: string
+  ctaSecondaryLabel?: string
+  programId?: string
+  image?: string
+}
+
+const defaultSlides: Slide[] = [
   {
     id: 1,
     title: '혼자서는 무너집니다.\nSSC스파르타와 함께라면 버팁니다.',
@@ -23,6 +34,7 @@ const defaultSlides = [
     subtitle: '공무원 합격자에게 물어보세요, 합격자는 스파르타 했습니다.',
     description: '',
     ctaLabel: '공무원 합격반 알아보기',
+    programId: 'gwanmuwon',
   },
   {
     id: 3,
@@ -30,6 +42,7 @@ const defaultSlides = [
     subtitle: '초등·중등·유아 임용 — 마지막 60일이 합격을 가릅니다',
     description: '',
     ctaLabel: '임용반 알아보기',
+    programId: 'imdong',
   },
   {
     id: 4,
@@ -37,6 +50,7 @@ const defaultSlides = [
     subtitle: '생활 리듬이 무너지면 강의도 소용없어요. 관리가 먼저입니다.',
     description: '',
     ctaLabel: '반값재수 알아보기',
+    programId: 'jaesu',
   },
   {
     id: 5,
@@ -44,10 +58,11 @@ const defaultSlides = [
     subtitle: '교시제 시간표 + 코멘터 관리 — 전문자격도 관리가 결과를 만듭니다',
     description: '세무사 · 노무사 · 회계사 · 산업기사 · 각종 기사시험 전 방향 커버',
     ctaLabel: '전문자격반 알아보기',
+    programId: 'jagyeok',
   },
 ]
 
-export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlides } = {}) {
+export function HeroSlider({ slides: slidesProp }: { slides?: Slide[] } = {}) {
   const { data } = useSWR<SiteContent>('/api/content', fetcher)
   const slides = slidesProp ?? data?.hero?.slides ?? defaultSlides
 
@@ -113,13 +128,13 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
           <div
             key={slide.id}
             className={`absolute inset-0 transition-opacity duration-1000 ${
-              i === current ? 'opacity-100' : 'opacity-0'
+              i === current ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
           >
             {/* Background: photo if provided, else navy */}
-            {(slide as {image?: string}).image ? (
+            {slide.image ? (
               <>
-                <Image src={(slide as {image?: string}).image!} alt="" fill className="object-cover" priority={i === 0} />
+                <Image src={slide.image} alt="" fill className="object-cover" priority={i === 0} />
                 <div className="absolute inset-0 bg-navy/75" />
               </>
             ) : (
@@ -162,9 +177,8 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
                     <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                       <button
                         onClick={() => {
-                          const programId = (slide as { programId?: string }).programId
-                          if (programId) {
-                            openProgram(programId)
+                          if (slide.programId) {
+                            openProgram(slide.programId)
                           } else {
                             scroll('cta')
                           }
