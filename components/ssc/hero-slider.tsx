@@ -74,11 +74,8 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
   }
 
   const openProgram = (programId: string) => {
+    window.dispatchEvent(new CustomEvent('openProgram', { detail: programId }))
     scroll('programs')
-    // Programs 컴포넌트가 스크롤 후 탭을 열 수 있도록 약간의 지연 후 이벤트 발송
-    setTimeout(() => {
-      window.dispatchEvent(new CustomEvent('openProgram', { detail: programId }))
-    }, 400)
   }
 
   const handleTouchStart = (e: React.TouchEvent) => {
