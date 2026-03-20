@@ -25,6 +25,7 @@ export function Navbar() {
     { label: '내부시설', href: campusOnPath ? `/${campusOnPath}/interior` : '#interior-facilities' },
     { label: '캠퍼스', href: '#campus' },
     { label: '상담신청', href: '#cta' },
+    { label: '나의 원국', href: '/saju' },
   ]
 
   useEffect(() => {
