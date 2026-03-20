@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
 import { ChevronRight, X, Check } from 'lucide-react'
+import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 // ============================================================
 // ▼▼▼ 블로그 URL 수정 영역 ▼▼▼
@@ -167,7 +168,7 @@ SSC스파르타는 불필요한 실강 비용을 덜어내고,
 
 type Program = typeof programsTabs[number]
 
-function ProgramDetail({ program, onClose, blogUrl }: { program: Program; onClose: () => void; blogUrl: string }) {
+function ProgramDetail({ program, onClose, blogUrl, naverMapUrl }: { program: Program; onClose: () => void; blogUrl: string; naverMapUrl: string }) {
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
@@ -316,14 +317,22 @@ function ProgramDetail({ program, onClose, blogUrl }: { program: Program; onClos
         </div>
 
         {/* Fixed bottom CTA */}
-        <div className="fixed bottom-0 inset-x-0 p-4 bg-background border-t border-border-color">
+        <div className="fixed bottom-0 inset-x-0 p-4 bg-background border-t border-border-color flex flex-col gap-2">
+          <a
+            href={naverMapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full py-3.5 rounded-2xl bg-accent-amber text-navy font-bold text-base text-center"
+          >
+            좌석 예약하기 →
+          </a>
           <a
             href={blogUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full py-4 rounded-2xl bg-navy text-white font-bold text-base text-center"
+            className="block w-full py-3 rounded-2xl border border-navy text-navy font-semibold text-sm text-center"
           >
-            더 알아보기 →
+            더 알아보기
           </a>
         </div>
       </div>
@@ -331,11 +340,23 @@ function ProgramDetail({ program, onClose, blogUrl }: { program: Program; onClos
   )
 }
 
+const campusKeyMap = { '원주': 'wonju', '춘천': 'chuncheon', '충주': 'chungju' } as const
+
 export function Programs({ location = '원주' }: { location?: '원주' | '춘천' | '충주' }) {
   const [selected, setSelected] = useState<string | null>(null)
   const ref = useScrollReveal()
   const selectedProgram = programsTabs.find((p) => p.id === selected)
   const selectedBlogUrl = selected ? (BLOG_URLS[selected]?.[location] ?? '#') : '#'
+  const naverMapUrl = CAMPUS_CONFIG[campusKeyMap[location]].naverMapUrl
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const programId = (e as CustomEvent<string>).detail
+      setSelected(programId)
+    }
+    window.addEventListener('openProgram', handler)
+    return () => window.removeEventListener('openProgram', handler)
+  }, [])
 
   return (
     <section id="programs" className="bg-background py-16 md:py-28" ref={ref}>
@@ -391,6 +412,7 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
           program={selectedProgram}
           onClose={() => setSelected(null)}
           blogUrl={selectedBlogUrl}
+          naverMapUrl={naverMapUrl}
         />
       )}
     </section>

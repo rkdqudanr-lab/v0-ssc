@@ -73,6 +73,14 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const openProgram = (programId: string) => {
+    scroll('programs')
+    // Programs 컴포넌트가 스크롤 후 탭을 열 수 있도록 약간의 지연 후 이벤트 발송
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('openProgram', { detail: programId }))
+    }, 400)
+  }
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
     setAutoPlay(false)
@@ -156,7 +164,14 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
                     {/* CTAs */}
                     <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                       <button
-                        onClick={() => scroll('cta')}
+                        onClick={() => {
+                          const programId = (slide as { programId?: string }).programId
+                          if (programId) {
+                            openProgram(programId)
+                          } else {
+                            scroll('cta')
+                          }
+                        }}
                         className="px-6 py-3 rounded-lg font-semibold text-base transition-colors bg-white text-navy hover:bg-white/90"
                       >
                         {slide.ctaLabel}
