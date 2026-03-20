@@ -20,7 +20,7 @@ export const CAMPUS_CONFIG = {
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     naverMapUrl: 'https://naver.me/5Q3BqTPH',
     kakaoUrl: 'https://pf.kakao.com/_example',
-    naverTalkUrl: 'https://talk.naver.com',
+    naverTalkUrl: 'https://talk.naver.com/ct/w4zhf8',
     image: '/images/campus-wonju.jpg',
   },
   chuncheon: {
@@ -31,7 +31,7 @@ export const CAMPUS_CONFIG = {
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     naverMapUrl: 'https://naver.me/5RhgAeoi',
     kakaoUrl: 'https://pf.kakao.com/_example',
-    naverTalkUrl: 'https://talk.naver.com',
+    naverTalkUrl: 'https://talk.naver.com/ct/w4kwt8?frm=mnmb&frm=nmb_detail#nafullscreen',
     image: '/images/campus-chuncheon.jpg',
   },
   chungju: {
@@ -42,7 +42,7 @@ export const CAMPUS_CONFIG = {
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
     naverMapUrl: 'https://naver.me/xmxZQakb',
     kakaoUrl: 'https://pf.kakao.com/_example',
-    naverTalkUrl: 'https://talk.naver.com',
+    naverTalkUrl: 'https://talk.naver.com/ct/w40pkj?frm=mnmb&frm=nmb_detail#nafullscreen',
     image: '/images/campus-chungju.jpg',
   },
 }

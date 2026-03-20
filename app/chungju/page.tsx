@@ -57,6 +57,7 @@ const chungjuSlides = [
     description: '수능 · 독학재수 · 전문자격 전 방향 커버',
     ctaLabel: '수능관 알아보기',
     ctaSecondaryLabel: '프로그램 둘러보기',
+    programId: 'jaesu',
   },
   {
     id: 2,
@@ -65,6 +66,7 @@ const chungjuSlides = [
     subtitle: '독한 관리와 커넥츠프랩 시스템으로 매년 합격자를 배출합니다',
     description: '국가직 · 지방직 · 경찰 · 소방 · 군무원 전 직렬 커버',
     ctaLabel: '공무원 합격반 알아보기',
+    programId: 'gwanmuwon',
   },
   {
     id: 3,
@@ -73,6 +75,7 @@ const chungjuSlides = [
     subtitle: '충주스파르타 임용 합격생의 후기 — 의지 없어도 시스템이 잡아줍니다',
     description: '초등 · 중등 · 유아 임용 매년 합격자 배출',
     ctaLabel: '임용반 알아보기',
+    programId: 'imdong',
   },
   {
     id: 4,
@@ -81,6 +84,7 @@ const chungjuSlides = [
     subtitle: '교시제 시간표 + 코멘터 관리 — 전문자격도 관리가 결과를 만듭니다',
     description: '세무사 · 노무사 · 회계사 · 산업기사 · 각종 기사시험 전 방향 커버',
     ctaLabel: '전문자격반 알아보기',
+    programId: 'jagyeok',
   },
 ]
 
@@ -155,7 +159,7 @@ export default function ChungjuPage() {
       <Faq />
       <CtaBanner phone={CAMPUS_CONFIG.chungju.phone} naverTalkUrl={CAMPUS_CONFIG.chungju.naverTalkUrl} />
       <Footer />
-      <MobileCtaBar phone={CAMPUS_CONFIG.chungju.phone} kakaoUrl={CAMPUS_CONFIG.chungju.kakaoUrl} />
+      <MobileCtaBar phone={CAMPUS_CONFIG.chungju.phone} naverTalkUrl={CAMPUS_CONFIG.chungju.naverTalkUrl} />
     </main>
   )
 }
