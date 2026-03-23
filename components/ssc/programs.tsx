@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { ChevronRight, X, Check } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 // ============================================================
@@ -168,9 +168,44 @@ SSC스파르타는 불필요한 실강 비용을 덜어내고,
 
 type Program = typeof programsTabs[number]
 
-function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
+// ── 컴팩트 선택기 (좌측 패널) ───────────────────────────────
+function CompactSelector({
+  prog,
+  isSelected,
+  onClick,
+}: {
+  prog: Program
+  isSelected: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full text-left rounded-xl p-4 transition-all duration-200 active:scale-[0.98] ${
+        isSelected
+          ? 'ring-2 ring-accent-amber ring-offset-2 opacity-100'
+          : 'opacity-55 hover:opacity-75'
+      }`}
+      style={{ backgroundColor: cardColors[prog.id] }}
+      aria-pressed={isSelected}
+    >
+      <span className="text-white/60 text-xs block mb-1">{prog.badge}</span>
+      <h3 className="text-white font-bold text-base whitespace-pre-line leading-tight display-title">
+        {prog.title}
+      </h3>
+      <span className="text-accent-amber text-sm font-bold mt-2 block">{prog.stat}</span>
+    </button>
+  )
+}
+
+// ── 상세 패널 (우측/하단 패널) ──────────────────────────────
+function DetailPanel({
+  program,
+  blogUrl,
+  naverMapUrl,
+  accentColor,
+}: {
   program: Program
-  onClose: () => void
   blogUrl: string
   naverMapUrl: string
   accentColor: string
@@ -178,26 +213,19 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
   return (
     <div
       className="rounded-2xl border border-border-color bg-background overflow-hidden"
-      style={{ animation: 'slideDown 0.3s ease-out' }}
+      style={{ animation: 'slideDown 0.25s ease-out' }}
+      key={program.id}
     >
       {/* Colored accent bar */}
       <div className="h-1" style={{ backgroundColor: accentColor }} />
 
       {/* Header */}
-      <div className="px-6 pt-5 pb-2 flex items-start justify-between">
-        <div>
-          <span className="eyebrow text-accent-blue">{program.badge}</span>
-          <h2 className="text-2xl font-bold text-navy dark:text-foreground mt-1 -tracking-tight whitespace-pre-line">
-            {program.title}
-          </h2>
-        </div>
-        <button
-          onClick={onClose}
-          className="p-2 rounded-full bg-background-subtle mt-1 ml-4 flex-shrink-0"
-          aria-label="닫기"
-        >
-          <X size={18} className="text-text-secondary" />
-        </button>
+      <div className="px-6 pt-5 pb-2">
+        <span className="eyebrow text-accent-blue">{program.badge}</span>
+        <h2 className="text-2xl font-bold text-navy dark:text-foreground mt-1 -tracking-tight whitespace-pre-line display-title">
+          {program.title}
+        </h2>
+        <p className="text-text-secondary text-sm mt-1">{program.subtitle}</p>
       </div>
 
       {/* Content */}
@@ -211,7 +239,7 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
         {'steps' in program && program.steps && (
           <div className="space-y-4 border-t border-border-color pt-6">
             <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider">3단계 시스템</p>
-            {(program.steps as Array<{title: string; description: string}>).map((step, i) => (
+            {(program.steps as Array<{ title: string; description: string }>).map((step, i) => (
               <div key={i} className="flex gap-4">
                 <div className="w-7 h-7 rounded-full bg-navy/10 flex items-center justify-center flex-shrink-0 text-xs font-bold text-navy">
                   {i + 1}
@@ -244,7 +272,7 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
           <div className="border-t border-border-color pt-6">
             <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">관리 시스템</p>
             <div className="grid grid-cols-2 gap-3">
-              {(program.management as Array<{icon: string; text: string}>).map((item, i) => (
+              {(program.management as Array<{ icon: string; text: string }>).map((item, i) => (
                 <div key={i} className="p-3 rounded-xl bg-background-subtle">
                   <div className="text-2xl mb-1">{item.icon}</div>
                   <p className="text-xs text-text-secondary leading-tight">{item.text}</p>
@@ -269,7 +297,7 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
         {'timeline' in program && program.timeline && (
           <div className="border-t border-border-color pt-6 space-y-2">
             <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">합격 타임라인</p>
-            {(program.timeline as Array<{month: string; desc: string}>).map((item, i) => (
+            {(program.timeline as Array<{ month: string; desc: string }>).map((item, i) => (
               <div key={i} className="flex items-start gap-4 px-4 py-3 rounded-xl bg-background-subtle">
                 <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-navy/10 text-navy font-bold whitespace-nowrap">
                   {item.month}
@@ -286,7 +314,9 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
             <p className="text-sm font-semibold text-navy dark:text-white leading-relaxed mb-2 whitespace-pre-line">
               &ldquo;{program.pullquote as string}&rdquo;
             </p>
-            {'author' in program && <p className="text-xs text-text-secondary">— {program.author as string}</p>}
+            {'author' in program && (
+              <p className="text-xs text-text-secondary">— {program.author as string}</p>
+            )}
           </blockquote>
         )}
 
@@ -294,16 +324,18 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
         {'testimonial' in program && program.testimonial && (
           <div className="px-6 py-6 rounded-2xl bg-navy/5 border border-navy/10">
             <blockquote className="text-sm font-semibold text-navy dark:text-white mb-2 whitespace-pre-line">
-              &ldquo;{(program.testimonial as {quote: string; author: string}).quote}&rdquo;
+              &ldquo;{(program.testimonial as { quote: string; author: string }).quote}&rdquo;
             </blockquote>
-            <p className="text-xs text-text-secondary">— {(program.testimonial as {quote: string; author: string}).author}</p>
+            <p className="text-xs text-text-secondary">
+              — {(program.testimonial as { quote: string; author: string }).author}
+            </p>
           </div>
         )}
 
         {/* Multiple Testimonials */}
         {'testimonials' in program && program.testimonials && (
           <div className="space-y-3">
-            {(program.testimonials as Array<{quote: string; author: string}>).map((t, i) => (
+            {(program.testimonials as Array<{ quote: string; author: string }>).map((t, i) => (
               <div key={i} className="px-6 py-5 rounded-2xl bg-navy/5 border border-navy/10">
                 <blockquote className="text-sm font-semibold text-navy dark:text-white mb-2 whitespace-pre-line">
                   &ldquo;{t.quote}&rdquo;
@@ -314,7 +346,7 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
           </div>
         )}
 
-        {/* CTA buttons — inline at bottom */}
+        {/* CTA buttons */}
         <div className="border-t border-border-color pt-6 flex flex-col gap-2">
           <a
             href={naverMapUrl}
@@ -341,27 +373,30 @@ function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
 const campusKeyMap = { '원주': 'wonju', '춘천': 'chuncheon', '충주': 'chungju' } as const
 
 export function Programs({ location = '원주' }: { location?: '원주' | '춘천' | '충주' }) {
-  const [selected, setSelected] = useState<string | null>(null)
+  const [selected, setSelected] = useState<string>(programsTabs[0].id)
   const ref = useScrollReveal()
-  const detailPanelRef = useRef<HTMLDivElement>(null)
-  const selectedProgram = programsTabs.find((p) => p.id === selected)
-  const selectedBlogUrl = selected ? (BLOG_URLS[selected]?.[location] ?? '#') : '#'
+  const isFirstRender = useRef(true)
+
+  const selectedProgram = programsTabs.find((p) => p.id === selected)!
+  const selectedBlogUrl = BLOG_URLS[selected]?.[location] ?? '#'
   const naverMapUrl = CAMPUS_CONFIG[campusKeyMap[location]].naverMapUrl
 
-  const toggleSelected = (id: string) => {
-    setSelected((prev) => (prev === id ? null : id))
-  }
-
-  // Scroll to detail panel whenever a program is selected
+  // #programs 섹션 상단으로 스크롤 (초기 로드 제외, 네비바 72px 보정)
   useEffect(() => {
-    if (!selected) return
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    const el = document.getElementById('programs')
+    if (!el) return
     const timer = setTimeout(() => {
-      detailPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const top = el.getBoundingClientRect().top + window.scrollY - 72
+      window.scrollTo({ top, behavior: 'smooth' })
     }, 50)
     return () => clearTimeout(timer)
   }, [selected])
 
-  // Listen for openProgram events from hero slider
+  // 히어로 슬라이더의 openProgram 이벤트 수신
   useEffect(() => {
     const handler = (e: Event) => {
       const programId = (e as CustomEvent<string>).detail
@@ -374,7 +409,7 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
   return (
     <section id="programs" className="bg-background py-16 md:py-28" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Section heading */}
+        {/* 섹션 헤딩 */}
         <div className="mb-10 text-center fade-in-up">
           <p className="eyebrow text-accent-blue mb-3">Programs</p>
           <h2 className="display-title text-3xl md:text-5xl font-bold text-navy dark:text-foreground">
@@ -385,54 +420,28 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
           </p>
         </div>
 
-        {/* Card stack */}
-        <div className="flex flex-col gap-4">
-          {programsTabs.map((prog) => (
-            <button
-              key={prog.id}
-              onClick={() => toggleSelected(prog.id)}
-              className={`relative w-full text-left rounded-2xl p-8 min-h-[240px] flex flex-col justify-between overflow-hidden transition-all duration-200 active:scale-[0.98] fade-in-up ${
-                selected === prog.id ? 'ring-2 ring-accent-amber ring-offset-2' : ''
-              }`}
-              style={{ backgroundColor: cardColors[prog.id] }}
-              aria-expanded={selected === prog.id}
-            >
-              {/* Badge */}
-              <span className="inline-flex px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold w-fit mb-4">
-                {prog.badge}
-              </span>
-
-              {/* Title + subtitle */}
-              <div>
-                <h3 className="text-white font-bold text-4xl md:text-5xl display-title whitespace-pre-line">
-                  {prog.title}
-                </h3>
-                <p className="text-white/60 text-sm mt-2">{prog.subtitle}</p>
-              </div>
-
-              {/* Stat + arrow row */}
-              <div className="flex items-end justify-between mt-6">
-                <span className="text-2xl font-bold text-accent-amber font-sans">
-                  {prog.stat}
-                </span>
-                <ChevronRight className="text-white/40" size={24} />
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Detail panel — below all cards */}
-        {selected && selectedProgram && (
-          <div className="mt-6" ref={detailPanelRef}>
-            <DetailPanel
-              program={selectedProgram}
-              onClose={() => setSelected(null)}
-              blogUrl={selectedBlogUrl}
-              naverMapUrl={naverMapUrl}
-              accentColor={cardColors[selected]}
-            />
+        {/* 2-패널 레이아웃: 좌측 선택기 + 우측 상세 */}
+        <div className="md:grid md:grid-cols-[300px_1fr] md:gap-6 fade-in-up">
+          {/* 컴팩트 선택기 — 모바일: 2x2 그리드, 데스크탑: 세로 스택 */}
+          <div className="grid grid-cols-2 md:grid-cols-1 gap-3 mb-4 md:mb-0">
+            {programsTabs.map((prog) => (
+              <CompactSelector
+                key={prog.id}
+                prog={prog}
+                isSelected={selected === prog.id}
+                onClick={() => setSelected(prog.id)}
+              />
+            ))}
           </div>
-        )}
+
+          {/* 상세 패널 — 항상 표시, 선택에 따라 내용 전환 */}
+          <DetailPanel
+            program={selectedProgram}
+            blogUrl={selectedBlogUrl}
+            naverMapUrl={naverMapUrl}
+            accentColor={cardColors[selected]}
+          />
+        </div>
       </div>
     </section>
   )
