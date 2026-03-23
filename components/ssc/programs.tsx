@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { ChevronRight, ChevronDown, X, Check } from 'lucide-react'
+import { ChevronRight, X, Check } from 'lucide-react'
 import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 // ============================================================
@@ -168,13 +168,22 @@ SSC스파르타는 불필요한 실강 비용을 덜어내고,
 
 type Program = typeof programsTabs[number]
 
-function InlineDetail({ program, onClose, blogUrl, naverMapUrl }: { program: Program; onClose: () => void; blogUrl: string; naverMapUrl: string }) {
+function DetailPanel({ program, onClose, blogUrl, naverMapUrl, accentColor }: {
+  program: Program
+  onClose: () => void
+  blogUrl: string
+  naverMapUrl: string
+  accentColor: string
+}) {
   return (
     <div
-      className="bg-background rounded-b-2xl border border-t-0 border-border-color overflow-hidden"
+      className="rounded-2xl border border-border-color bg-background overflow-hidden"
       style={{ animation: 'slideDown 0.3s ease-out' }}
     >
-      {/* Header row */}
+      {/* Colored accent bar */}
+      <div className="h-1" style={{ backgroundColor: accentColor }} />
+
+      {/* Header */}
       <div className="px-6 pt-5 pb-2 flex items-start justify-between">
         <div>
           <span className="eyebrow text-accent-blue">{program.badge}</span>
@@ -192,7 +201,7 @@ function InlineDetail({ program, onClose, blogUrl, naverMapUrl }: { program: Pro
       </div>
 
       {/* Content */}
-      <div className="px-6 pt-2 pb-6 space-y-6">
+      <div className="px-6 pb-6 space-y-6">
         {/* Description */}
         <p className="text-text-secondary leading-relaxed whitespace-pre-line">
           {program.description}
@@ -305,7 +314,7 @@ function InlineDetail({ program, onClose, blogUrl, naverMapUrl }: { program: Pro
           </div>
         )}
 
-        {/* CTA buttons — inline at bottom of detail */}
+        {/* CTA buttons — inline at bottom */}
         <div className="border-t border-border-color pt-6 flex flex-col gap-2">
           <a
             href={naverMapUrl}
@@ -334,20 +343,29 @@ const campusKeyMap = { '원주': 'wonju', '춘천': 'chuncheon', '충주': 'chun
 export function Programs({ location = '원주' }: { location?: '원주' | '춘천' | '충주' }) {
   const [selected, setSelected] = useState<string | null>(null)
   const ref = useScrollReveal()
+  const detailPanelRef = useRef<HTMLDivElement>(null)
+  const selectedProgram = programsTabs.find((p) => p.id === selected)
+  const selectedBlogUrl = selected ? (BLOG_URLS[selected]?.[location] ?? '#') : '#'
   const naverMapUrl = CAMPUS_CONFIG[campusKeyMap[location]].naverMapUrl
 
   const toggleSelected = (id: string) => {
     setSelected((prev) => (prev === id ? null : id))
   }
 
+  // Scroll to detail panel whenever a program is selected
+  useEffect(() => {
+    if (!selected) return
+    const timer = setTimeout(() => {
+      detailPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [selected])
+
+  // Listen for openProgram events from hero slider
   useEffect(() => {
     const handler = (e: Event) => {
       const programId = (e as CustomEvent<string>).detail
       setSelected(programId)
-      setTimeout(() => {
-        document.getElementById(`program-card-${programId}`)
-          ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }, 100)
     }
     window.addEventListener('openProgram', handler)
     return () => window.removeEventListener('openProgram', handler)
@@ -369,56 +387,52 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
 
         {/* Card stack */}
         <div className="flex flex-col gap-4">
-          {programsTabs.map((prog) => {
-            const isOpen = selected === prog.id
-            const blogUrl = BLOG_URLS[prog.id]?.[location] ?? '#'
-            return (
-              <div key={prog.id} id={`program-card-${prog.id}`} className="fade-in-up">
-                {/* Card header — clickable toggle */}
-                <button
-                  onClick={() => toggleSelected(prog.id)}
-                  className={`relative w-full text-left p-8 min-h-[240px] flex flex-col justify-between overflow-hidden transition-transform duration-200 active:scale-[0.98] ${isOpen ? 'rounded-t-2xl' : 'rounded-2xl'}`}
-                  style={{ backgroundColor: cardColors[prog.id] }}
-                  aria-expanded={isOpen}
-                >
-                  {/* Badge */}
-                  <span className="inline-flex px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold w-fit mb-4">
-                    {prog.badge}
-                  </span>
+          {programsTabs.map((prog) => (
+            <button
+              key={prog.id}
+              onClick={() => toggleSelected(prog.id)}
+              className={`relative w-full text-left rounded-2xl p-8 min-h-[240px] flex flex-col justify-between overflow-hidden transition-all duration-200 active:scale-[0.98] fade-in-up ${
+                selected === prog.id ? 'ring-2 ring-accent-amber ring-offset-2' : ''
+              }`}
+              style={{ backgroundColor: cardColors[prog.id] }}
+              aria-expanded={selected === prog.id}
+            >
+              {/* Badge */}
+              <span className="inline-flex px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold w-fit mb-4">
+                {prog.badge}
+              </span>
 
-                  {/* Title + subtitle */}
-                  <div>
-                    <h3 className="text-white font-bold text-4xl md:text-5xl display-title whitespace-pre-line">
-                      {prog.title}
-                    </h3>
-                    <p className="text-white/60 text-sm mt-2">{prog.subtitle}</p>
-                  </div>
-
-                  {/* Stat + arrow row */}
-                  <div className="flex items-end justify-between mt-6">
-                    <span className="text-2xl font-bold text-accent-amber font-sans">
-                      {prog.stat}
-                    </span>
-                    {isOpen
-                      ? <ChevronDown className="text-white/60" size={24} />
-                      : <ChevronRight className="text-white/40" size={24} />
-                    }
-                  </div>
-                </button>
-
-                {/* Inline detail panel */}
-                {isOpen && (
-                  <InlineDetail
-                    program={prog}
-                    onClose={() => setSelected(null)}
-                    blogUrl={blogUrl}
-                    naverMapUrl={naverMapUrl}
-                  />
-                )}
+              {/* Title + subtitle */}
+              <div>
+                <h3 className="text-white font-bold text-4xl md:text-5xl display-title whitespace-pre-line">
+                  {prog.title}
+                </h3>
+                <p className="text-white/60 text-sm mt-2">{prog.subtitle}</p>
               </div>
-            )
-          })}
+
+              {/* Stat + arrow row */}
+              <div className="flex items-end justify-between mt-6">
+                <span className="text-2xl font-bold text-accent-amber font-sans">
+                  {prog.stat}
+                </span>
+                <ChevronRight className="text-white/40" size={24} />
+              </div>
+            </button>
+          ))}
         </div>
+
+        {/* Detail panel — below all cards */}
+        {selected && selectedProgram && (
+          <div className="mt-6" ref={detailPanelRef}>
+            <DetailPanel
+              program={selectedProgram}
+              onClose={() => setSelected(null)}
+              blogUrl={selectedBlogUrl}
+              naverMapUrl={naverMapUrl}
+              accentColor={cardColors[selected]}
+            />
+          </div>
+        )}
       </div>
     </section>
   )
