@@ -157,7 +157,7 @@ export default function WonjuPage() {
       <Systems />
       <Campus filter="원주" />
       <Faq />
-      <CtaBanner phone={CAMPUS_CONFIG.wonju.phone} naverTalkUrl={CAMPUS_CONFIG.wonju.naverTalkUrl} />
+      <CtaBanner phone={CAMPUS_CONFIG.wonju.phone} naverTalkUrl={CAMPUS_CONFIG.wonju.naverTalkUrl} naverMapUrl={CAMPUS_CONFIG.wonju.naverMapUrl} />
       <Footer />
       <MobileCtaBar phone={CAMPUS_CONFIG.wonju.phone} naverTalkUrl={CAMPUS_CONFIG.wonju.naverTalkUrl} />
     </main>

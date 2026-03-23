@@ -3,6 +3,7 @@ import { ChevronLeft } from 'lucide-react'
 import { Navbar } from '@/components/ssc/navbar'
 import { MonthlyProgram } from '@/components/ssc/monthly-program'
 import { CtaBanner } from '@/components/ssc/cta-banner'
+import { CAMPUS_CONFIG } from '@/lib/campus-config'
 import { Footer } from '@/components/ssc/footer'
 import { MobileCtaBar } from '@/components/ssc/mobile-cta-bar'
 import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
@@ -32,7 +33,7 @@ export default function WonjuProgramsPage() {
       {/* 📁 사진 위치: public/images/programs/wonju/ */}
       <MonthlyProgram campus="wonju" title="이달의 프로그램" showEmpty />
 
-      <CtaBanner />
+      <CtaBanner naverMapUrl={CAMPUS_CONFIG.wonju.naverMapUrl} />
       <Footer />
       <MobileCtaBar />
     </main>
