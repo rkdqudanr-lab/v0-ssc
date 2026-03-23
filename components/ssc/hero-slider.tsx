@@ -73,9 +73,6 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const openProgram = (programId: string) => {
-    window.dispatchEvent(new CustomEvent('openProgram', { detail: programId }))
-  }
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
@@ -163,7 +160,7 @@ export function HeroSlider({ slides: slidesProp }: { slides?: typeof defaultSlid
                         onClick={() => {
                           const programId = (slide as { programId?: string }).programId
                           if (programId) {
-                            openProgram(programId)
+                            scroll('programs')
                           } else {
                             scroll('cta')
                           }

@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { Check } from 'lucide-react'
+import { ChevronRight, X, Check } from 'lucide-react'
 import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 // ============================================================
@@ -168,186 +168,156 @@ SSC스파르타는 불필요한 실강 비용을 덜어내고,
 
 type Program = typeof programsTabs[number]
 
-// ── 컴팩트 선택기 (좌측 패널) ───────────────────────────────
-function CompactSelector({
-  prog,
-  isSelected,
-  onClick,
-}: {
-  prog: Program
-  isSelected: boolean
-  onClick: () => void
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`w-full text-left rounded-xl p-4 transition-all duration-200 active:scale-[0.98] ${
-        isSelected
-          ? 'ring-2 ring-accent-amber ring-offset-2 opacity-100'
-          : 'opacity-55 hover:opacity-75'
-      }`}
-      style={{ backgroundColor: cardColors[prog.id] }}
-      aria-pressed={isSelected}
-    >
-      <span className="text-white/60 text-xs block mb-1">{prog.badge}</span>
-      <h3 className="text-white font-bold text-base whitespace-pre-line leading-tight display-title">
-        {prog.title}
-      </h3>
-      <span className="text-accent-amber text-sm font-bold mt-2 block">{prog.stat}</span>
-    </button>
-  )
-}
-
-// ── 상세 패널 (우측/하단 패널) ──────────────────────────────
-function DetailPanel({
-  program,
-  blogUrl,
-  naverMapUrl,
-  accentColor,
-}: {
-  program: Program
-  blogUrl: string
-  naverMapUrl: string
-  accentColor: string
-}) {
+function ProgramDetail({ program, onClose, blogUrl, naverMapUrl }: { program: Program; onClose: () => void; blogUrl: string; naverMapUrl: string }) {
   return (
     <div
-      className="rounded-2xl border border-border-color bg-background overflow-hidden"
-      style={{ animation: 'slideDown 0.25s ease-out' }}
-      key={program.id}
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}
     >
-      {/* Colored accent bar */}
-      <div className="h-1" style={{ backgroundColor: accentColor }} />
-
-      {/* Header */}
-      <div className="px-6 pt-5 pb-2">
-        <span className="eyebrow text-accent-blue">{program.badge}</span>
-        <h2 className="text-2xl font-bold text-navy dark:text-foreground mt-1 -tracking-tight whitespace-pre-line display-title">
-          {program.title}
-        </h2>
-        <p className="text-text-secondary text-sm mt-1">{program.subtitle}</p>
-      </div>
-
-      {/* Content */}
-      <div className="px-6 pb-6 space-y-6">
-        {/* Description */}
-        <p className="text-text-secondary leading-relaxed whitespace-pre-line">
-          {program.description}
-        </p>
-
-        {/* Steps */}
-        {'steps' in program && program.steps && (
-          <div className="space-y-4 border-t border-border-color pt-6">
-            <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider">3단계 시스템</p>
-            {(program.steps as Array<{ title: string; description: string }>).map((step, i) => (
-              <div key={i} className="flex gap-4">
-                <div className="w-7 h-7 rounded-full bg-navy/10 flex items-center justify-center flex-shrink-0 text-xs font-bold text-navy">
-                  {i + 1}
-                </div>
-                <div>
-                  <h4 className="font-semibold text-text-primary text-sm mb-0.5">{step.title}</h4>
-                  <p className="text-xs text-text-secondary leading-relaxed whitespace-pre-line">{step.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Subject Pills */}
-        {'subjects' in program && program.subjects && (
-          <div className="border-t border-border-color pt-6">
-            <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">커버 자격증</p>
-            <div className="flex flex-wrap gap-2">
-              {(program.subjects as string[]).map((subject, i) => (
-                <span key={i} className="px-3 py-1.5 rounded-full text-xs font-semibold bg-accent-blue/10 text-accent-blue border border-accent-blue/20">
-                  {subject}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Management items (jaesu) */}
-        {'management' in program && program.management && (
-          <div className="border-t border-border-color pt-6">
-            <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">관리 시스템</p>
-            <div className="grid grid-cols-2 gap-3">
-              {(program.management as Array<{ icon: string; text: string }>).map((item, i) => (
-                <div key={i} className="p-3 rounded-xl bg-background-subtle">
-                  <div className="text-2xl mb-1">{item.icon}</div>
-                  <p className="text-xs text-text-secondary leading-tight">{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Features */}
-        <div className="border-t border-border-color pt-6 space-y-3">
-          <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider">포함 혜택</p>
-          {program.features.map((feature, i) => (
-            <div key={i} className="flex items-start gap-3">
-              <Check size={16} className="text-accent-blue flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-              <span className="text-sm text-text-primary leading-relaxed">{feature}</span>
-            </div>
-          ))}
+      <div
+        className="absolute inset-x-0 bottom-0 bg-background rounded-t-3xl max-h-[92vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+        style={{ animation: 'slideUp 0.4s ease-out' }}
+      >
+        {/* Handle bar */}
+        <div className="flex justify-center pt-3 pb-2">
+          <div className="w-10 h-1 rounded-full bg-border" />
         </div>
 
-        {/* Timeline */}
-        {'timeline' in program && program.timeline && (
-          <div className="border-t border-border-color pt-6 space-y-2">
-            <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">합격 타임라인</p>
-            {(program.timeline as Array<{ month: string; desc: string }>).map((item, i) => (
-              <div key={i} className="flex items-start gap-4 px-4 py-3 rounded-xl bg-background-subtle">
-                <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-navy/10 text-navy font-bold whitespace-nowrap">
-                  {item.month}
-                </span>
-                <p className="text-sm text-text-secondary">{item.desc}</p>
+        {/* Header */}
+        <div className="px-6 pt-2 pb-4 flex items-start justify-between">
+          <div>
+            <span className="eyebrow text-accent-blue">{program.badge}</span>
+            <h2 className="text-2xl font-bold text-navy dark:text-foreground mt-1 -tracking-tight whitespace-pre-line">
+              {program.title}
+            </h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full bg-background-subtle mt-1 ml-4 flex-shrink-0"
+            aria-label="닫기"
+          >
+            <X size={18} className="text-text-secondary" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="px-6 pb-36 space-y-6">
+          {/* Description */}
+          <p className="text-text-secondary leading-relaxed whitespace-pre-line">
+            {program.description}
+          </p>
+
+          {/* Steps */}
+          {'steps' in program && program.steps && (
+            <div className="space-y-4 border-t border-border-color pt-6">
+              <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider">3단계 시스템</p>
+              {(program.steps as Array<{title: string; description: string}>).map((step, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="w-7 h-7 rounded-full bg-navy/10 flex items-center justify-center flex-shrink-0 text-xs font-bold text-navy">
+                    {i + 1}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-text-primary text-sm mb-0.5">{step.title}</h4>
+                    <p className="text-xs text-text-secondary leading-relaxed whitespace-pre-line">{step.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Subject Pills */}
+          {'subjects' in program && program.subjects && (
+            <div className="border-t border-border-color pt-6">
+              <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">커버 자격증</p>
+              <div className="flex flex-wrap gap-2">
+                {(program.subjects as string[]).map((subject, i) => (
+                  <span key={i} className="px-3 py-1.5 rounded-full text-xs font-semibold bg-accent-blue/10 text-accent-blue border border-accent-blue/20">
+                    {subject}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Management items (jaesu) */}
+          {'management' in program && program.management && (
+            <div className="border-t border-border-color pt-6">
+              <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">관리 시스템</p>
+              <div className="grid grid-cols-2 gap-3">
+                {(program.management as Array<{icon: string; text: string}>).map((item, i) => (
+                  <div key={i} className="p-3 rounded-xl bg-background-subtle">
+                    <div className="text-2xl mb-1">{item.icon}</div>
+                    <p className="text-xs text-text-secondary leading-tight">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Features */}
+          <div className="border-t border-border-color pt-6 space-y-3">
+            <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider">포함 혜택</p>
+            {program.features.map((feature, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <Check size={16} className="text-accent-blue flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                <span className="text-sm text-text-primary leading-relaxed">{feature}</span>
               </div>
             ))}
           </div>
-        )}
 
-        {/* Pull Quote */}
-        {'pullquote' in program && program.pullquote && (
-          <blockquote className="px-6 py-6 rounded-2xl bg-accent-blue/5 border-l-4 border-accent-blue">
-            <p className="text-sm font-semibold text-navy dark:text-white leading-relaxed mb-2 whitespace-pre-line">
-              &ldquo;{program.pullquote as string}&rdquo;
-            </p>
-            {'author' in program && (
-              <p className="text-xs text-text-secondary">— {program.author as string}</p>
-            )}
-          </blockquote>
-        )}
+          {/* Timeline */}
+          {'timeline' in program && program.timeline && (
+            <div className="border-t border-border-color pt-6 space-y-2">
+              <p className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">합격 타임라인</p>
+              {(program.timeline as Array<{month: string; desc: string}>).map((item, i) => (
+                <div key={i} className="flex items-start gap-4 px-4 py-3 rounded-xl bg-background-subtle">
+                  <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-navy/10 text-navy font-bold whitespace-nowrap">
+                    {item.month}
+                  </span>
+                  <p className="text-sm text-text-secondary">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
-        {/* Single Testimonial */}
-        {'testimonial' in program && program.testimonial && (
-          <div className="px-6 py-6 rounded-2xl bg-navy/5 border border-navy/10">
-            <blockquote className="text-sm font-semibold text-navy dark:text-white mb-2 whitespace-pre-line">
-              &ldquo;{(program.testimonial as { quote: string; author: string }).quote}&rdquo;
+          {/* Pull Quote */}
+          {'pullquote' in program && program.pullquote && (
+            <blockquote className="px-6 py-6 rounded-2xl bg-accent-blue/5 border-l-4 border-accent-blue">
+              <p className="text-sm font-semibold text-navy dark:text-white leading-relaxed mb-2 whitespace-pre-line">
+                &ldquo;{program.pullquote as string}&rdquo;
+              </p>
+              {'author' in program && <p className="text-xs text-text-secondary">— {program.author as string}</p>}
             </blockquote>
-            <p className="text-xs text-text-secondary">
-              — {(program.testimonial as { quote: string; author: string }).author}
-            </p>
-          </div>
-        )}
+          )}
 
-        {/* Multiple Testimonials */}
-        {'testimonials' in program && program.testimonials && (
-          <div className="space-y-3">
-            {(program.testimonials as Array<{ quote: string; author: string }>).map((t, i) => (
-              <div key={i} className="px-6 py-5 rounded-2xl bg-navy/5 border border-navy/10">
-                <blockquote className="text-sm font-semibold text-navy dark:text-white mb-2 whitespace-pre-line">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <p className="text-xs text-text-secondary">— {t.author}</p>
-              </div>
-            ))}
-          </div>
-        )}
+          {/* Single Testimonial */}
+          {'testimonial' in program && program.testimonial && (
+            <div className="px-6 py-6 rounded-2xl bg-navy/5 border border-navy/10">
+              <blockquote className="text-sm font-semibold text-navy dark:text-white mb-2 whitespace-pre-line">
+                &ldquo;{(program.testimonial as {quote: string; author: string}).quote}&rdquo;
+              </blockquote>
+              <p className="text-xs text-text-secondary">— {(program.testimonial as {quote: string; author: string}).author}</p>
+            </div>
+          )}
 
-        {/* CTA buttons */}
-        <div className="border-t border-border-color pt-6 flex flex-col gap-2">
+          {/* Multiple Testimonials */}
+          {'testimonials' in program && program.testimonials && (
+            <div className="space-y-3">
+              {(program.testimonials as Array<{quote: string; author: string}>).map((t, i) => (
+                <div key={i} className="px-6 py-5 rounded-2xl bg-navy/5 border border-navy/10">
+                  <blockquote className="text-sm font-semibold text-navy dark:text-white mb-2 whitespace-pre-line">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <p className="text-xs text-text-secondary">— {t.author}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Fixed bottom CTA */}
+        <div className="fixed bottom-0 inset-x-0 p-4 bg-background border-t border-border-color flex flex-col gap-2">
           <a
             href={naverMapUrl}
             target="_blank"
@@ -360,7 +330,7 @@ function DetailPanel({
             href={blogUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full py-3 rounded-2xl border border-navy text-navy dark:text-foreground dark:border-foreground font-semibold text-sm text-center"
+            className="block w-full py-3 rounded-2xl border border-navy text-navy font-semibold text-sm text-center"
           >
             더 알아보기
           </a>
@@ -373,43 +343,16 @@ function DetailPanel({
 const campusKeyMap = { '원주': 'wonju', '춘천': 'chuncheon', '충주': 'chungju' } as const
 
 export function Programs({ location = '원주' }: { location?: '원주' | '춘천' | '충주' }) {
-  const [selected, setSelected] = useState<string>(programsTabs[0].id)
+  const [selected, setSelected] = useState<string | null>(null)
   const ref = useScrollReveal()
-  const isFirstRender = useRef(true)
-
-  const selectedProgram = programsTabs.find((p) => p.id === selected)!
-  const selectedBlogUrl = BLOG_URLS[selected]?.[location] ?? '#'
+  const selectedProgram = programsTabs.find((p) => p.id === selected)
+  const selectedBlogUrl = selected ? (BLOG_URLS[selected]?.[location] ?? '#') : '#'
   const naverMapUrl = CAMPUS_CONFIG[campusKeyMap[location]].naverMapUrl
-
-  // #programs 섹션 상단으로 스크롤 (초기 로드 제외, 네비바 72px 보정)
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
-    const el = document.getElementById('programs')
-    if (!el) return
-    const timer = setTimeout(() => {
-      const top = el.getBoundingClientRect().top + window.scrollY - 72
-      window.scrollTo({ top, behavior: 'smooth' })
-    }, 50)
-    return () => clearTimeout(timer)
-  }, [selected])
-
-  // 히어로 슬라이더의 openProgram 이벤트 수신
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const programId = (e as CustomEvent<string>).detail
-      setSelected(programId)
-    }
-    window.addEventListener('openProgram', handler)
-    return () => window.removeEventListener('openProgram', handler)
-  }, [])
 
   return (
     <section id="programs" className="bg-background py-16 md:py-28" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* 섹션 헤딩 */}
+        {/* Section heading */}
         <div className="mb-10 text-center fade-in-up">
           <p className="eyebrow text-accent-blue mb-3">Programs</p>
           <h2 className="display-title text-3xl md:text-5xl font-bold text-navy dark:text-foreground">
@@ -420,29 +363,49 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
           </p>
         </div>
 
-        {/* 2-패널 레이아웃: 좌측 선택기 + 우측 상세 */}
-        <div className="md:grid md:grid-cols-[300px_1fr] md:gap-6 fade-in-up">
-          {/* 컴팩트 선택기 — 모바일: 2x2 그리드, 데스크탑: 세로 스택 */}
-          <div className="grid grid-cols-2 md:grid-cols-1 gap-3 mb-4 md:mb-0">
-            {programsTabs.map((prog) => (
-              <CompactSelector
-                key={prog.id}
-                prog={prog}
-                isSelected={selected === prog.id}
-                onClick={() => setSelected(prog.id)}
-              />
-            ))}
-          </div>
+        {/* Card stack */}
+        <div className="flex flex-col gap-4">
+          {programsTabs.map((prog) => (
+            <button
+              key={prog.id}
+              onClick={() => setSelected(prog.id)}
+              className="relative w-full text-left rounded-2xl p-8 min-h-[240px] flex flex-col justify-between overflow-hidden transition-transform duration-200 active:scale-[0.98] fade-in-up"
+              style={{ backgroundColor: cardColors[prog.id] }}
+            >
+              {/* Badge */}
+              <span className="inline-flex px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold w-fit mb-4">
+                {prog.badge}
+              </span>
 
-          {/* 상세 패널 — 항상 표시, 선택에 따라 내용 전환 */}
-          <DetailPanel
-            program={selectedProgram}
-            blogUrl={selectedBlogUrl}
-            naverMapUrl={naverMapUrl}
-            accentColor={cardColors[selected]}
-          />
+              {/* Title + subtitle */}
+              <div>
+                <h3 className="text-white font-bold text-4xl md:text-5xl display-title whitespace-pre-line">
+                  {prog.title}
+                </h3>
+                <p className="text-white/60 text-sm mt-2">{prog.subtitle}</p>
+              </div>
+
+              {/* Stat + arrow row */}
+              <div className="flex items-end justify-between mt-6">
+                <span className="text-2xl font-bold text-accent-amber font-sans">
+                  {prog.stat}
+                </span>
+                <ChevronRight className="text-white/40" size={24} />
+              </div>
+            </button>
+          ))}
         </div>
       </div>
+
+      {/* Detail overlay */}
+      {selected && selectedProgram && (
+        <ProgramDetail
+          program={selectedProgram}
+          onClose={() => setSelected(null)}
+          blogUrl={selectedBlogUrl}
+          naverMapUrl={naverMapUrl}
+        />
+      )}
     </section>
   )
 }
