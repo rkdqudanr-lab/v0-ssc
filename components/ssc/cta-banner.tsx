@@ -1,17 +1,19 @@
 'use client'
 
 import { useScrollReveal } from '@/hooks/use-scroll-reveal'
-import { Phone } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 interface CtaBannerProps {
   phone?: string
   naverTalkUrl?: string
+  naverMapUrl?: string
 }
 
 export function CtaBanner({
   phone = CAMPUS_CONFIG.wonju.phone,
   naverTalkUrl = CAMPUS_CONFIG.wonju.naverTalkUrl,
+  naverMapUrl = CAMPUS_CONFIG.wonju.naverMapUrl,
 }: CtaBannerProps) {
   const ref = useScrollReveal()
 
@@ -40,10 +42,12 @@ export function CtaBanner({
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href={`tel:${phone}`}
+              href={naverMapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-accent-amber text-navy font-bold text-sm hover:bg-accent-amber/90 transition-colors"
             >
-              <Phone size={16} />
+              <MapPin size={16} />
               지금 자리 잡기 →
             </a>
             <a

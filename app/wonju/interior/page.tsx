@@ -7,6 +7,7 @@ import { Facilities } from '@/components/ssc/facilities'
 import { defaultFacilities } from '@/components/ssc/facilities-data'
 import { InteriorFacilities } from '@/components/ssc/interior-facilities'
 import { CtaBanner } from '@/components/ssc/cta-banner'
+import { CAMPUS_CONFIG } from '@/lib/campus-config'
 import { Footer } from '@/components/ssc/footer'
 import { MobileCtaBar } from '@/components/ssc/mobile-cta-bar'
 import { ScrollRevealInit } from '@/components/ssc/scroll-reveal-init'
@@ -58,7 +59,7 @@ export default function WonjuInteriorPage() {
       {/* 📁 사진 위치: public/images/interior/wonju/ */}
       <InteriorFacilities campus="wonju" />
 
-      <CtaBanner />
+      <CtaBanner naverMapUrl={CAMPUS_CONFIG.wonju.naverMapUrl} />
       <Footer />
       <MobileCtaBar />
     </main>

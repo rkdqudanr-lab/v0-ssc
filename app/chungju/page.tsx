@@ -157,7 +157,7 @@ export default function ChungjuPage() {
       <Systems />
       <Campus filter="충주" />
       <Faq />
-      <CtaBanner phone={CAMPUS_CONFIG.chungju.phone} naverTalkUrl={CAMPUS_CONFIG.chungju.naverTalkUrl} />
+      <CtaBanner phone={CAMPUS_CONFIG.chungju.phone} naverTalkUrl={CAMPUS_CONFIG.chungju.naverTalkUrl} naverMapUrl={CAMPUS_CONFIG.chungju.naverMapUrl} />
       <Footer />
       <MobileCtaBar phone={CAMPUS_CONFIG.chungju.phone} naverTalkUrl={CAMPUS_CONFIG.chungju.naverTalkUrl} />
     </main>

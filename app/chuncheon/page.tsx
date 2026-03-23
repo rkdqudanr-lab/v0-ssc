@@ -157,7 +157,7 @@ export default function ChuncheonPage() {
       <Systems />
       <Campus filter="춘천" />
       <Faq />
-      <CtaBanner phone={CAMPUS_CONFIG.chuncheon.phone} naverTalkUrl={CAMPUS_CONFIG.chuncheon.naverTalkUrl} />
+      <CtaBanner phone={CAMPUS_CONFIG.chuncheon.phone} naverTalkUrl={CAMPUS_CONFIG.chuncheon.naverTalkUrl} naverMapUrl={CAMPUS_CONFIG.chuncheon.naverMapUrl} />
       <Footer />
       <MobileCtaBar phone={CAMPUS_CONFIG.chuncheon.phone} naverTalkUrl={CAMPUS_CONFIG.chuncheon.naverTalkUrl} />
     </main>
