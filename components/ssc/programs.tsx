@@ -36,6 +36,22 @@ const BLOG_URLS: Record<string, Record<string, string>> = {
     충주: 'https://blog.naver.com/sscchungju/224155599490',
   },
 }
+
+// ── 공무원 합격반 전용: 공무원 / 경찰 / 소방 버튼을 별도로 구성 ──────────
+// 항목이 있으면 단일 "더 알아보기" 버튼 대신 아래 버튼들이 표시됩니다.
+const GWANMUWON_SUB_URLS: Record<string, Array<{ label: string; url: string }>> = {
+  원주: [
+    { label: '공무원 더 알아보기', url: 'https://blog.naver.com/guy0701/224221788388' },
+  ],
+  춘천: [
+    { label: '공무원 더 알아보기', url: 'https://blog.naver.com/TODO' }, // TODO: 춘천 공무원 URL
+  ],
+  충주: [
+    { label: '공무원 더 알아보기', url: 'https://blog.naver.com/sscchungju/224021149574' },
+    { label: '경찰 더 알아보기', url: 'https://blog.naver.com/sscchungju/224147704850' },
+    { label: '소방 더 알아보기', url: 'https://blog.naver.com/sscchungju/223920273672' },
+  ],
+}
 // ▲▲▲ 블로그 URL 수정 영역 끝 ▲▲▲
 // ============================================================
 
@@ -168,7 +184,7 @@ SSC스파르타는 불필요한 실강 비용을 덜어내고,
 
 type Program = typeof programsTabs[number]
 
-function ProgramDetail({ program, onClose, blogUrl, naverMapUrl }: { program: Program; onClose: () => void; blogUrl: string; naverMapUrl: string }) {
+function ProgramDetail({ program, onClose, blogUrls, naverMapUrl }: { program: Program; onClose: () => void; blogUrls: Array<{ label: string; url: string }>; naverMapUrl: string }) {
   return (
     <div
       className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
@@ -326,14 +342,17 @@ function ProgramDetail({ program, onClose, blogUrl, naverMapUrl }: { program: Pr
           >
             좌석 예약하기 →
           </a>
-          <a
-            href={blogUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full py-3 rounded-2xl border border-navy text-navy font-semibold text-sm text-center"
-          >
-            더 알아보기
-          </a>
+          {blogUrls.map(({ label, url }) => (
+            <a
+              key={label}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full py-3 rounded-2xl border border-navy text-navy font-semibold text-sm text-center dark:border-accent-blue dark:text-accent-blue"
+            >
+              {label}
+            </a>
+          ))}
         </div>
       </div>
     </div>
@@ -346,7 +365,9 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
   const [selected, setSelected] = useState<string | null>(null)
   const ref = useScrollReveal()
   const selectedProgram = programsTabs.find((p) => p.id === selected)
-  const selectedBlogUrl = selected ? (BLOG_URLS[selected]?.[location] ?? '#') : '#'
+  const selectedBlogUrls = selected === 'gwanmuwon'
+    ? (GWANMUWON_SUB_URLS[location] ?? [{ label: '더 알아보기', url: BLOG_URLS[selected]?.[location] ?? '#' }])
+    : [{ label: '더 알아보기', url: (selected ? BLOG_URLS[selected]?.[location] : undefined) ?? '#' }]
   const naverMapUrl = CAMPUS_CONFIG[campusKeyMap[location]].naverMapUrl
 
   return (
@@ -402,7 +423,7 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
         <ProgramDetail
           program={selectedProgram}
           onClose={() => setSelected(null)}
-          blogUrl={selectedBlogUrl}
+          blogUrls={selectedBlogUrls}
           naverMapUrl={naverMapUrl}
         />
       )}
