@@ -15,15 +15,17 @@ const PROGRAM_BLOG_URLS: Record<string, Record<string, BlogButton[]>> = {
   // ── 공무원 합격반 ──────────────────────────────────────────
   gwanmuwon: {
     원주: [
-      { label: '공무원 더 알아보기', url: 'https://blog.naver.com/guy0701/224221788388' },
+      { label: '경찰/소방 더 알아보기',   url: 'https://blog.naver.com/PostView.naver?blogId=guy0701&logNo=224051208065&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=6&postListTopCurrentPage=&from=postList&userTopListOpen=true&userTopListCount=5&userTopListManageOpen=false&userTopListCurrentPage=6' },
+      { label: '국가/지방직 더 알아보기', url: 'https://blog.naver.com/guy0701/224221788388' },
     ],
     춘천: [
-      { label: '공무원 더 알아보기', url: '#' }, // TODO: 춘천 공무원 URL로 교체
+      { label: '경찰/소방 더 알아보기',   url: '#' }, // TODO: 춘천 경찰/소방 URL로 교체
+      { label: '국가/지방직 더 알아보기', url: '#' }, // TODO: 춘천 국가/지방직 URL로 교체
     ],
     충주: [
-      { label: '공무원 더 알아보기', url: 'https://blog.naver.com/sscchungju/224021149574' },
-      { label: '경찰 더 알아보기',   url: 'https://blog.naver.com/sscchungju/224147704850' },
-      { label: '소방 더 알아보기',   url: 'https://blog.naver.com/sscchungju/223920273672' },
+      { label: '경찰 더 알아보기',        url: 'https://blog.naver.com/sscchungju/224147704850' },
+      { label: '소방 더 알아보기',        url: 'https://blog.naver.com/sscchungju/223920273672' },
+      { label: '국가/지방직 더 알아보기', url: 'https://blog.naver.com/sscchungju/224021149574' },
     ],
   },
   // ── 임용고시 합격반 ───────────────────────────────────────
