@@ -13,25 +13,25 @@ import { CAMPUS_CONFIG } from '@/lib/campus-config'
 const BLOG_URLS: Record<string, Record<string, string>> = {
   // ── 공무원 합격반 ──────────────────────────────────────────
   gwanmuwon: {
-    원주: 'https://blog.naver.com/TODO', // TODO: 원주 공무원합격반 블로그 URL로 교체
+    원주: 'https://blog.naver.com/guy0701/224221788388',
     춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 공무원합격반 블로그 URL로 교체
     충주: 'https://blog.naver.com/TODO', // TODO: 충주 공무원합격반 블로그 URL로 교체
   },
   // ── 임용고시 합격반 ───────────────────────────────────────
   imdong: {
-    원주: 'https://blog.naver.com/TODO', // TODO: 원주 임용고시합격반 블로그 URL로 교체
+    원주: 'https://blog.naver.com/PostView.naver?blogId=guy0701&logNo=224174015002&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=3&postListTopCurrentPage=&from=postList',
     춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 임용고시합격반 블로그 URL로 교체
     충주: 'https://blog.naver.com/TODO', // TODO: 충주 임용고시합격반 블로그 URL로 교체
   },
   // ── 전문자격 집중반 ───────────────────────────────────────
   jagyeok: {
-    원주: 'https://blog.naver.com/TODO', // TODO: 원주 전문자격집중반 블로그 URL로 교체
+    원주: 'https://blog.naver.com/PostView.naver?blogId=guy0701&logNo=224121357028&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=4&postListTopCurrentPage=1&from=postList&userTopListOpen=true&userTopListCount=5&userTopListManageOpen=false&userTopListCurrentPage=4',
     춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 전문자격집중반 블로그 URL로 교체
     충주: 'https://blog.naver.com/TODO', // TODO: 충주 전문자격집중반 블로그 URL로 교체
   },
   // ── 독학재수 관리형 ───────────────────────────────────────
   jaesu: {
-    원주: 'https://blog.naver.com/TODO', // TODO: 원주 독학재수관리형 블로그 URL로 교체
+    원주: 'https://blog.naver.com/guy0701/224128950623',
     춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 독학재수관리형 블로그 URL로 교체
     충주: 'https://blog.naver.com/TODO', // TODO: 충주 독학재수관리형 블로그 URL로 교체
   },
