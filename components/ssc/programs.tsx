@@ -7,50 +7,61 @@ import { CAMPUS_CONFIG } from '@/lib/campus-config'
 
 // ============================================================
 // ▼▼▼ 블로그 URL 수정 영역 ▼▼▼
-// 각 지점(원주 / 춘천 / 충주)과 프로그램별로 연결할 블로그 URL을
-// 아래에서 직접 수정하세요.
+// 각 지점(원주 / 춘천 / 충주)과 프로그램별 버튼을 여기서 관리합니다.
+// url: '#' 인 항목은 나중에 실제 URL로 교체하세요.
 // ============================================================
-const BLOG_URLS: Record<string, Record<string, string>> = {
+type BlogButton = { label: string; url: string }
+const PROGRAM_BLOG_URLS: Record<string, Record<string, BlogButton[]>> = {
   // ── 공무원 합격반 ──────────────────────────────────────────
   gwanmuwon: {
-    원주: 'https://blog.naver.com/guy0701/224221788388',
-    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 공무원합격반 블로그 URL로 교체
-    충주: 'https://blog.naver.com/sscchungju/224021149574',
+    원주: [
+      { label: '공무원 더 알아보기', url: 'https://blog.naver.com/guy0701/224221788388' },
+    ],
+    춘천: [
+      { label: '공무원 더 알아보기', url: '#' }, // TODO: 춘천 공무원 URL로 교체
+    ],
+    충주: [
+      { label: '공무원 더 알아보기', url: 'https://blog.naver.com/sscchungju/224021149574' },
+      { label: '경찰 더 알아보기',   url: 'https://blog.naver.com/sscchungju/224147704850' },
+      { label: '소방 더 알아보기',   url: 'https://blog.naver.com/sscchungju/223920273672' },
+    ],
   },
   // ── 임용고시 합격반 ───────────────────────────────────────
   imdong: {
-    원주: 'https://blog.naver.com/PostView.naver?blogId=guy0701&logNo=224174015002&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=3&postListTopCurrentPage=&from=postList',
-    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 임용고시합격반 블로그 URL로 교체
-    충주: 'https://blog.naver.com/sscchungju/224229215194',
+    원주: [
+      { label: '임용 더 알아보기', url: 'https://blog.naver.com/PostView.naver?blogId=guy0701&logNo=224174015002&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=3&postListTopCurrentPage=&from=postList' },
+    ],
+    춘천: [
+      { label: '임용 더 알아보기', url: '#' }, // TODO: 춘천 임용 URL로 교체
+    ],
+    충주: [
+      { label: '임용 더 알아보기', url: 'https://blog.naver.com/sscchungju/224229215194' },
+    ],
   },
   // ── 전문자격 집중반 ───────────────────────────────────────
   jagyeok: {
-    원주: 'https://blog.naver.com/PostView.naver?blogId=guy0701&logNo=224121357028&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=4&postListTopCurrentPage=1&from=postList&userTopListOpen=true&userTopListCount=5&userTopListManageOpen=false&userTopListCurrentPage=4',
-    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 전문자격집중반 블로그 URL로 교체
-    충주: 'https://blog.naver.com/sscchungju/223562434007',
+    원주: [
+      { label: '전문자격 더 알아보기', url: 'https://blog.naver.com/PostView.naver?blogId=guy0701&logNo=224121357028&categoryNo=0&parentCategoryNo=0&viewDate=&currentPage=4&postListTopCurrentPage=1&from=postList&userTopListOpen=true&userTopListCount=5&userTopListManageOpen=false&userTopListCurrentPage=4' },
+    ],
+    춘천: [
+      { label: '전문자격 더 알아보기', url: '#' }, // TODO: 춘천 전문자격 URL로 교체
+    ],
+    충주: [
+      { label: '전문자격 더 알아보기', url: 'https://blog.naver.com/sscchungju/223562434007' },
+    ],
   },
   // ── 독학재수 관리형 ───────────────────────────────────────
   jaesu: {
-    원주: 'https://blog.naver.com/guy0701/224128950623',
-    춘천: 'https://blog.naver.com/TODO', // TODO: 춘천 독학재수관리형 블로그 URL로 교체
-    충주: 'https://blog.naver.com/sscchungju/224155599490',
+    원주: [
+      { label: '재수 더 알아보기', url: 'https://blog.naver.com/guy0701/224128950623' },
+    ],
+    춘천: [
+      { label: '재수 더 알아보기', url: '#' }, // TODO: 춘천 재수 URL로 교체
+    ],
+    충주: [
+      { label: '재수 더 알아보기', url: 'https://blog.naver.com/sscchungju/224155599490' },
+    ],
   },
-}
-
-// ── 공무원 합격반 전용: 공무원 / 경찰 / 소방 버튼을 별도로 구성 ──────────
-// 항목이 있으면 단일 "더 알아보기" 버튼 대신 아래 버튼들이 표시됩니다.
-const GWANMUWON_SUB_URLS: Record<string, Array<{ label: string; url: string }>> = {
-  원주: [
-    { label: '공무원 더 알아보기', url: 'https://blog.naver.com/guy0701/224221788388' },
-  ],
-  춘천: [
-    { label: '공무원 더 알아보기', url: 'https://blog.naver.com/TODO' }, // TODO: 춘천 공무원 URL
-  ],
-  충주: [
-    { label: '공무원 더 알아보기', url: 'https://blog.naver.com/sscchungju/224021149574' },
-    { label: '경찰 더 알아보기', url: 'https://blog.naver.com/sscchungju/224147704850' },
-    { label: '소방 더 알아보기', url: 'https://blog.naver.com/sscchungju/223920273672' },
-  ],
 }
 // ▲▲▲ 블로그 URL 수정 영역 끝 ▲▲▲
 // ============================================================
@@ -218,7 +229,7 @@ function ProgramDetail({ program, onClose, blogUrls, naverMapUrl }: { program: P
         </div>
 
         {/* Content */}
-        <div className="px-6 pb-36 space-y-6">
+        <div className="px-6 pb-72 space-y-6">
           {/* Description */}
           <p className="text-text-secondary leading-relaxed whitespace-pre-line">
             {program.description}
@@ -365,9 +376,9 @@ export function Programs({ location = '원주' }: { location?: '원주' | '춘�
   const [selected, setSelected] = useState<string | null>(null)
   const ref = useScrollReveal()
   const selectedProgram = programsTabs.find((p) => p.id === selected)
-  const selectedBlogUrls = selected === 'gwanmuwon'
-    ? (GWANMUWON_SUB_URLS[location] ?? [{ label: '더 알아보기', url: BLOG_URLS[selected]?.[location] ?? '#' }])
-    : [{ label: '더 알아보기', url: (selected ? BLOG_URLS[selected]?.[location] : undefined) ?? '#' }]
+  const selectedBlogUrls: BlogButton[] = selected
+    ? (PROGRAM_BLOG_URLS[selected]?.[location] ?? [{ label: '더 알아보기', url: '#' }])
+    : []
   const naverMapUrl = CAMPUS_CONFIG[campusKeyMap[location]].naverMapUrl
 
   return (
