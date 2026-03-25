@@ -18,7 +18,7 @@ export const CAMPUS_CONFIG = {
     address: '강원특별자치도 원주시 치악로 1793 농협건물 4층',
     addrShort: '치악로 1793 농협건물 4층',
     hours: '평일 06:30 – 22:00 / 주말 07:00 – 22:00',
-    naverMapUrl: 'https://naver.me/5Q3BqTPH',
+    naverMapUrl: 'https://naver.me/xAFXrxdb',
     kakaoUrl: 'https://pf.kakao.com/_example',
     naverTalkUrl: 'https://talk.naver.com/ct/w4zhf8',
     image: '/images/campus-wonju.jpg',
